@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin-kapt")
+    //id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -35,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = false
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -60,8 +64,8 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
     //arouter
-    implementation ("com.alibaba:arouter-api:1.5.2")
-    kapt  ("com.alibaba:arouter-compiler:1.5.2")
+    //implementation ("com.alibaba:arouter-api:1.5.2")
+    //kapt  ("com.alibaba:arouter-compiler:1.5.2")
 
 
 

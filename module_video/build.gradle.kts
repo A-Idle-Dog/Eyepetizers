@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,6 +17,7 @@ android {
         //versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -34,13 +36,20 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding {
+        enable = true
+    }
+}
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
 }
 
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
     //router
-    implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
 
     //retrofit

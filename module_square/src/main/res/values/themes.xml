@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Openeye" parent="Base.Theme.Openeye" />
+    <style name="ViewPagerStyle">
+        <item name="android:elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+    </style>
 </resources>
