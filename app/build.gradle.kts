@@ -46,7 +46,7 @@ android {
     buildFeatures {
         dataBinding = false
         viewBinding = true
-    }git
+    }
 }
 
 kapt {
