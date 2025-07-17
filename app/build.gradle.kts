@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
@@ -50,8 +51,13 @@ android {
 }
 
 dependencies {
+    //router
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
+
+    implementation(project(":module_home"))
+    implementation(project(":module_square"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

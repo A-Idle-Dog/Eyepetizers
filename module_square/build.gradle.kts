@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -39,6 +40,30 @@ android {
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
+
+    //paging
+    implementation ("androidx.paging:paging-runtime:3.0.0-beta01")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //viewmodel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.core:core-ktx:1.9.0")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+
+
+    //retrofit
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
+    //arouter
+    implementation ("com.alibaba:arouter-api:1.5.2")
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

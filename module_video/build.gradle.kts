@@ -43,6 +43,10 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
 
+    //retrofit
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("kotlin-kapt")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
@@ -41,8 +42,12 @@ dependencies {
     implementation(project(":lib_net"))
 
     //router
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
+    //retrofit
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
 
 
