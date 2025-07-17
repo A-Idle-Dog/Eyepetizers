@@ -1,5 +1,9 @@
 package com.example.module_square.retrofit
 
+import com.example.lib.net.Retrofit
+import com.example.module_square.api.ChildTabService
+import com.example.module_square.api.TabService
+
 /**
  *description:能看小说的app
  * author 王以飞
@@ -7,4 +11,7 @@ package com.example.module_square.retrofit
  * date 2025-2-18
  */
 object Square {
+    val tabService: TabService = Retrofit.getService(TabService::class.java)
+
+    val childTabService: ChildTabService = Retrofit.getService(ChildTabService::class.java)
 }

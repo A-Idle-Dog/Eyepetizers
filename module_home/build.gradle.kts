@@ -36,6 +36,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
+}
 
 dependencies {
     implementation(project(":LIB"))
@@ -43,7 +48,6 @@ dependencies {
 
     //router
     kapt  ("com.alibaba:arouter-compiler:1.5.2")
-    implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
     //retrofit
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")

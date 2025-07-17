@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    //id("kotlin-kapt")
+    //id("com.alibaba.arouter")
 }
 
 android {
@@ -37,6 +39,8 @@ android {
 }
 
 dependencies {
+
+
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
