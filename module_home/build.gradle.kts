@@ -37,6 +37,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":LIB"))
+    implementation(project(":lib_net"))
+
+    //router
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("com.alibaba:arouter-api:1.5.2")
 
