@@ -35,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = false
+        viewBinding = true
+    }
 }
 kapt {
     arguments {
@@ -45,6 +49,10 @@ kapt {
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
+    implementation(project(":module_square"))
+    implementation(project(":module_found"))
+    implementation(project(":module_hot"))
+    implementation(project(":module_found"))
 
     //router
     kapt  ("com.alibaba:arouter-compiler:1.5.2")
