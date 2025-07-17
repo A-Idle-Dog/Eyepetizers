@@ -47,6 +47,11 @@ kapt {
 }
 
 dependencies {
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+
+    implementation(project(":lib_network"))
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
     implementation(project(":module_square"))
@@ -61,7 +66,10 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
-
+    //paging
+    implementation ("androidx.paging:paging-runtime:3.0.0-beta01")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

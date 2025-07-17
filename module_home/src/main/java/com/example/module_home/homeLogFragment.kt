@@ -5,16 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.module_home.adapter.fragmentadapter
-import com.example.module_home.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.module_home.ViewModel.viewmodel.logViewModel
+import com.example.module_home.adapter.homelogadapter
+import com.example.module_home.databinding.FragmentHomeLogBinding
+import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class homeLogFragment : Fragment() {
+
+    private var _binding: FragmentHomeLogBinding? = null
     private val binding get() = _binding!!
 
     private var param1: String? = null
     private var param2: String? = null
+
+    private val mhomelogAdapter = homelogadapter()
+
+    private val viewModel by lazy { ViewModelProvider(this).get(logViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,23 +38,21 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeLogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initbp2()
-    }
-
-    fun initbp2(){
-        binding.viewPager.adapter= fragmentadapter(requireActivity())
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when(position) {
-                0 -> "推荐"
-                else -> "日报"
+        binding.recyclerView.apply {
+            adapter = mhomelogAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        lifecycleScope.launch {
+            viewModel.getPagingData().collect { pagingData ->
+                mhomelogAdapter.submitData(pagingData)
             }
-        }.attach()
+        }
     }
 
     override fun onDestroyView() {
@@ -57,10 +64,9 @@ class HomeFragment : Fragment() {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
 
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
+            homeLogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
