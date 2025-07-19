@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"> <!-- 调高封面图占比 -->
+        android:layout_height="300dp"> <!-- 调高封面图占比 -->
 
         <ImageView
             android:id="@+id/videocover"
