@@ -1,6 +1,5 @@
 package com.example.module_square.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +26,7 @@ class SquareViewModule : ViewModel() {
     val netState: LiveData<NetStatus>
         get() = _NetState
 
-    @SuppressLint("SuspiciousIndentation")
+
     fun getTabData()  {
         _NetState.value=NetStatus.LOADING
 

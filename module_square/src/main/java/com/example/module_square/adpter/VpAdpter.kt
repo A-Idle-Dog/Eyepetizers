@@ -34,11 +34,9 @@ class vpAdpter(private val list: List<Item>): RecyclerView.Adapter<RecyclerView.
         val imageUrl = item.data.icon.replace("http://", "https://")
         Glide.with(p0.itemView.context)
             .load(imageUrl)
+            .placeholder(R.drawable.loading2)
             .into(realHolder.v2)
     }
-
-
-
 
     override fun getItemCount(): Int {
         return list.size
