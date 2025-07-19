@@ -15,6 +15,8 @@ import com.example.module_home.model.Daily
 
 class homelogadapter() : PagingDataAdapter<Daily, RecyclerView.ViewHolder>(NewsDiffCallback){
 
+    var onItemClick: ((Daily) -> Unit)? = null
+
     object NewsDiffCallback : DiffUtil.ItemCallback<Daily>() {
         override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean {
             return true
@@ -35,6 +37,12 @@ class homelogadapter() : PagingDataAdapter<Daily, RecyclerView.ViewHolder>(NewsD
         val videoresoureceTextView =view.findViewById<TextView>(R.id.video_resourece)
         val videoduration = view.findViewById<TextView>(R.id.video_duration)
         val videotags = view.findViewById<TextView>(R.id.video_tag)
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(getItem(adapterPosition)!!)
+            }
+        }
     }
 
     companion object {
