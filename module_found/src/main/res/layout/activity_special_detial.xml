@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoundActivity">
+    tools:context=".SpecialDetialActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -67,6 +67,5 @@
         android:layout_margin="16dp"
         android:contentDescription="回到顶部"
         app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"/>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

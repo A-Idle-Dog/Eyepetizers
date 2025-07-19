@@ -2,6 +2,7 @@ package com.example.module_found.retrofit
 
 import com.example.lib.net.Retrofit
 import com.example.module_found.api.CategoryService
+import com.example.module_found.api.SpecialService
 
 /**
  *description:能看小说的app
@@ -11,4 +12,5 @@ import com.example.module_found.api.CategoryService
  */
 object Category {
     val category:CategoryService = Retrofit.getService(CategoryService::class.java)
+    val special:SpecialService =Retrofit.getService(SpecialService::class.java)
 }

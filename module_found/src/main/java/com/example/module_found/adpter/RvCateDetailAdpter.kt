@@ -31,17 +31,19 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
     inner class rvCateDetailHolder(private val binding:ItemCateDetailBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item: Item?){
             binding?.apply {
-                tvName.text=item?.data?.header?.title
-                tvTime.text=item?.data?.content?.data?.duration?.time()
-                tvDesVideo.text=item?.data?.content?.data?.description
-                tvAclassify.text=item?.data?.content?.data?.category
+                tvName.text=item?.data?.header?.title?: "未知作者"
+                tvTime.text=item?.data?.content?.data?.duration?.time()?: "0:00"
+                tvDesVideo.text=item?.data?.content?.data?.description?: "暂无描述"
+                tvAclassify.text=item?.data?.content?.data?.category?: "未分类"
                 val imUrl1 = item?.data?.header?.icon?.replace("http://","https://")
                 val imUrl2 = item?.data?.content?.data?.cover?.feed?.replace("http://","https://")
                 Glide.with(itemView)
                     .load(imUrl1)
+                    .placeholder(R.drawable.loading2)
                     .into(ivAuthor)
                 Glide.with(itemView)
-                    .load(imUrl2).placeholder(R.drawable.loading2)
+                    .load(imUrl2)
+                    .placeholder(R.drawable.loading2)
                     .into(ivVideo)
             }
         }
