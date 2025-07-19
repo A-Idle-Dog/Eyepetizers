@@ -1,6 +1,7 @@
 package com.example.module_home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.module_home.ViewModel.viewmodel.logViewModel
 import com.example.module_home.adapter.homelogadapter
 import com.example.module_home.databinding.FragmentHomeLogBinding
+import com.example.module_home.model.rAuthor
 import kotlinx.coroutines.launch
 
 class homeLogFragment : Fragment() {
@@ -47,7 +50,23 @@ class homeLogFragment : Fragment() {
         binding.recyclerView.apply {
             adapter = mhomelogAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            mhomelogAdapter.onItemClick = {
+                ARouter.getInstance()
+                    .build("/module_video/VideoActivity")
+                    .withString("playuri",it.data.content.data.playUrl)
+                    .withString("cover",it.data.content.data.cover.feed)
+                    .withInt("uid",it.data.content.data.id)
+                    .withString("title",it.data.content.data.title)
+                    .withString("author",it.data.content.data.author.name)
+                    .withString("authoricon",it.data.header.icon)
+                    .withString("tags",it.data.content.data.tags[0].name)
+                    .withString("des",it.data.content.data.description)
+                    .withInt("likecount",it.data.content.data.consumption.collectionCount)
+                    .withInt("collectcount",it.data.content.data.consumption.realCollectionCount)
+                    .navigation()
+            }
         }
+
         lifecycleScope.launch {
             viewModel.getPagingData().collect { pagingData ->
                 mhomelogAdapter.submitData(pagingData)

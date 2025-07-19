@@ -17,6 +17,7 @@ android {
         //versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -51,6 +52,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
 
+    implementation(project(":module_video"))
     implementation(project(":lib_network"))
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
