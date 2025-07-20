@@ -54,11 +54,12 @@ class videoFragment : Fragment() {
     }
 
     fun initvt(){
-        binding.tabcontent.adapter = tabAdapter(requireActivity())
+        binding.tabcontent.adapter = tabAdapter(requireActivity(), invokeitem!!)
         TabLayoutMediator(binding.tabLayout, binding.tabcontent) { tab, position ->
             tab.text = when(position) {
                 0 -> "简介"
                 else -> "评论"
+
             }
         }.attach()
     }
@@ -74,7 +75,6 @@ class videoFragment : Fragment() {
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true
-
         binding.usernameTextView.text = item.author
         Glide.with(requireContext())
             .load(item.authoricon)
@@ -83,6 +83,8 @@ class videoFragment : Fragment() {
         binding.likeCount.text = item.likecount.toString()
         binding.collectCount.text = item.collectcount.toString()
     }
+
+
 
     override fun onPause() {
         super.onPause()
