@@ -1,6 +1,7 @@
 package com.example.openeye.ui
 
 import android.app.Application
+import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
 
  open class MyApplication :Application() {
@@ -20,5 +21,9 @@ import com.alibaba.android.arouter.launcher.ARouter
         }
         //官方推荐放到Application中初始化
         ARouter.init(mContext)
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            Log.e("CrashHandler", "Uncaught exception: ${throwable.message}", throwable)
+            // 可以在这里记录崩溃日志或执行其他操作
+        }
     }
 }

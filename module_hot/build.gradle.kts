@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -34,15 +35,37 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
 }
 
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
+    implementation(project(":module_video"))
+
+    //router
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
+    implementation ("com.alibaba:arouter-api:1.5.2")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+
 
     //retrofit
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
+    //viewmodel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.core:core-ktx:1.9.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

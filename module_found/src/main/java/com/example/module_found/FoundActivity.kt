@@ -61,6 +61,7 @@ class FoundActivity : BaseActivity<ActivityFoundBinding>() {
         mBinding.rvClassifyDetail.apply {
             layoutManager=LinearLayoutManager(this@FoundActivity)
             adapter=mAdpter
+
         }
         initView()
         getData(categoryId)
@@ -70,11 +71,11 @@ class FoundActivity : BaseActivity<ActivityFoundBinding>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mBinding.collDetail.title=intent.getStringExtra("tvClassify")
         mBinding.tvDes.text=intent.getStringExtra("desc")
-        val imUrl = intent.getStringExtra("url")?.replace("http://","https://")
+        /*val imUrl = intent.getStringExtra("url")?.replace("http://","https://")
         Glide.with(this)
             .load(imUrl)
             .placeholder(R.drawable.loading2)
-            .into(mBinding.imDetail)
+            .into(mBinding.imDetail)*/
 
         mBinding.btnUp.setOnClickListener {
             mBinding.rvClassifyDetail.smoothScrollToPosition(0)

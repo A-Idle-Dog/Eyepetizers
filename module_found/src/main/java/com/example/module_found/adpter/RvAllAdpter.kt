@@ -2,10 +2,12 @@ package com.example.module_found.adpter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.module_found.SpecialDetialActivity
 import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.databinding.ItemRvAllBinding
 
@@ -36,9 +38,29 @@ class RvAllAdpter :PagingDataAdapter<SpecialDetailBean,RvAllAdpter.rvAllHolder> 
                 val imUrl = specialDetailBean?.headerImage?.replace("http://","https://")
                 Glide.with(itemView)
                     .load(imUrl)
-                    .into(imAll)
+                    .into(ivAll)
             }
-
+        }
+        init {
+            binding.imAll.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    val special = getItem(position)
+                    if (special == null) {
+                        Toast.makeText(itemView.context, "请稍后再试", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    val id = special?.id.toString()
+                    val brief = special.brief.toString()
+                    val imgUrl = special?.headerImage?.replace("http://", "https://") ?: ""
+                    SpecialDetialActivity.actionStart(
+                        itemView.context,
+                        id,
+                        brief,
+                        imgUrl,
+                        binding.ivAll)
+                }
+            }
         }
     }
 

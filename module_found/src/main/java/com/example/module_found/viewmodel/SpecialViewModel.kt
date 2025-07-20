@@ -12,6 +12,7 @@ import com.example.module_found.retrofit.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -24,6 +25,9 @@ class SpecialViewModel:ViewModel() {
     private var _SpecialStateFlow= MutableStateFlow<List<SpecialDetailBean>?>(null)
     val specialStateFlow:StateFlow<List<SpecialDetailBean>?>
         get()=_SpecialStateFlow
+    private var _SpecialDetialStateFlow = MutableStateFlow<SpecialDetailBean?>(null)
+    val specialDetialStateFlow: StateFlow<SpecialDetailBean?>
+        get() = _SpecialDetialStateFlow.asStateFlow()
 
     fun getSpecial(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,4 +49,15 @@ class SpecialViewModel:ViewModel() {
         }
     }
     fun getSpecialMore()=Pager(PagingConfig(20,10)){AllPaging()}.flow.cachedIn(viewModelScope)
+    fun getSpecialData(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val responseItem = Category.special.getSpecialDetail(id)
+
+                _SpecialDetialStateFlow.emit(responseItem)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

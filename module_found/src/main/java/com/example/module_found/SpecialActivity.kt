@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.collectLatest
 
 class SpecialActivity : BaseActivity<ActivitySpecialBinding>() {
     private lateinit var mvSp: SpecialViewModel
-    private  var specialList= mutableListOf<SpecialDetailBean>()
     private val mAdpter :RvAllAdpter by lazy { RvAllAdpter() }
     override fun getBinding(): ActivitySpecialBinding {
         return ActivitySpecialBinding.inflate(layoutInflater)
