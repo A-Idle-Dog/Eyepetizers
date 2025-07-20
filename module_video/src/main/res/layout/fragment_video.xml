@@ -67,31 +67,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/videoPlayerContainer"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         app:tabTextColor="@color/white"
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorColor="@color/white"
         app:tabRippleColor="@null"
         android:background="@color/black">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="简介" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="评论" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/tabcontent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomActionsLayout"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        android:layout_marginTop="16dp">
+        tools:layout_editor_absoluteX="5dp">
 
     </androidx.viewpager2.widget.ViewPager2>
 
@@ -100,7 +94,7 @@
         android:id="@+id/bottomActionsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="8dp"
