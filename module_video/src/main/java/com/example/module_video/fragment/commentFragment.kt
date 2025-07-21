@@ -60,7 +60,7 @@ class commentFragment : Fragment() {
                 }
 
                 adapter.submitList(commentList)
-
+                checkDataState(commentList)
             }
         }
     }
@@ -74,21 +74,20 @@ class commentFragment : Fragment() {
             isNestedScrollingEnabled = false
         }
         adapter.submitList(emptyList())
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    /*
-    private fun checkEmptyState() {
-        if (adapter.itemCount == 0) {
-            binding.viewSwitcher.setDisplayedChild(0) // 显示空状态视图
+    private fun checkDataState(ccomm: List<Comment>) {
+        if (ccomm.size == 0) {
+            binding.viewSwitcher.setDisplayedChild(0);
         } else {
-            binding.viewSwitcher.setDisplayedChild(1) // 显示RecyclerView
+            binding.viewSwitcher.setDisplayedChild(1);
         }
     }
-    */
     companion object {
         @JvmStatic
         fun newInstance(data: invokeitem) : commentFragment {

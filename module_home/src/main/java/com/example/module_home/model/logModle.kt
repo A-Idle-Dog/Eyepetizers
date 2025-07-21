@@ -93,8 +93,8 @@ data class Author(
 )
 
 data class Consumption(
-    val collectionCount: Int,
-    val realCollectionCount: Int,
+    val collectionCount: Int,//点赞数
+    val realCollectionCount: Int,//收藏数
     val replyCount: Int,
     val shareCount: Int
 )

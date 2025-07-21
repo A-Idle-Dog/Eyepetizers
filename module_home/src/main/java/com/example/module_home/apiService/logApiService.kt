@@ -6,5 +6,5 @@ import retrofit2.http.Query
 
 interface logApiservice{
     @GET("/api/v5/index/tab/feed")
-        suspend fun getlogDate(@Query("page")page:Int ): ApiResponse
+        suspend fun getlogDate(@Query("data") data: Int?): ApiResponse
 }

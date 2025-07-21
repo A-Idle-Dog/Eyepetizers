@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".HomeFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF">  <!-- 添加一些垂直内边距，使整体更协调 -->
+
+        <!-- 应用图标（左边） -->
+        <ImageView
+            android:id="@+id/ivHeaderIcon"
+            android:src="@drawable/openeye"
+            android:layout_width="120dp"
+            android:layout_height="20dp" />
+
+        <!-- 中间可伸缩的TabLayout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tabMode="fixed">
+            <!-- 这里动态添加标签 -->
+        </com.google.android.material.tabs.TabLayout>
+
+        <!-- 通知图标（右边） -->
+        <ImageView
+            android:id="@+id/ivNotice"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/notice"
+            android:layout_marginEnd="16dp"/>
+    </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-
+        android:layout_weight="1"/>
 </LinearLayout>

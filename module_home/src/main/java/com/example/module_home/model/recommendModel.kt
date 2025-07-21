@@ -15,23 +15,23 @@ data class rData(
     val ad: Boolean,
     val author: rAuthor,
     val category: String,
-    val collected: Boolean,
+    val collected: Boolean,//是否收藏
     val consumption: rConsumption,
     val content: rContent,
     val cover: CoverX,
     val dataType: String,
     val date: Long,
-    val description: String,
+    val description: String,//描述
     val descriptionEditor: String,
     val duration: Int,
     val header: rHeader,
-    val id: Int,
+    val id: Int,//id
     val idx: Int,
     val ifLimitVideo: Boolean,
     val library: String,
     val playInfo: List<PlayInfoX>,
-    val playUrl: String,
-    val played: Boolean,
+    val playUrl: String,//播放地址
+    val played: Boolean,//是否喜欢
     val provider: ProviderX,
     val reallyCollected: Boolean,
     val recallSource: String,
@@ -43,7 +43,7 @@ data class rData(
     val src: Int,
     val tags: List<TagX>,
     val text: String,
-    val title: String,
+    val title: String,//标题
     val type: String,
     val videoPosterBean: VideoPosterBeanX,
     val webUrl: WebUrlX
@@ -54,20 +54,20 @@ data class rAuthor(
     val description: String,
     val expert: Boolean,
     val follow: rFollow,
-    val icon: String,
+    val icon: String,//作者头像
     val id: Int,
     val ifPgc: Boolean,
     val latestReleaseTime: Long,
     val link: String,
-    val name: String,
+    val name: String,//作者
     val recSort: Int,
     val shield: Shield,
     val videoNum: Int
 )
 
 data class rConsumption(
-    val collectionCount: Int,
-    val realCollectionCount: Int,
+    val collectionCount: Int,//点赞数
+    val realCollectionCount: Int,//收藏数
     val replyCount: Int,
     val shareCount: Int
 )
@@ -82,7 +82,7 @@ data class rContent(
 data class CoverX(
     val blurred: String,
     val detail: String,
-    val feed: String,
+    val feed: String,//cover
 )
 
 data class rHeader(
@@ -121,7 +121,7 @@ data class TagX(
     val headerImage: String,
     val id: Int,
     val ifNewest: Boolean,
-    val name: String,
+    val name: String,//tags
     val tagRecType: String
 )
 
@@ -133,7 +133,7 @@ data class VideoPosterBeanX(
 
 data class WebUrlX(
     val forWeibo: String,
-    val raw: String
+    val raw: String//分享链接
 )
 
 data class rFollow(
@@ -150,25 +150,25 @@ data class Shield(
 
 data class rDataX(
     val ad: Boolean,
-    val author: Author,
+    val author: rAuthor,
     val category: String,
-    val collected: Boolean,
-    val consumption: Consumption,
+    val collected: Boolean,//是否收藏
+    val consumption: rConsumption,
     val cover: CoverX,
     val dataType: String,
     val date: Long,
     val description: String,
     val descriptionEditor: String,
-    val descriptionPgc: String,
+    val descriptionPgc: String,//描述
     val duration: Int,
-    val id: Int,
+    val id: Int,//id
     val idx: Int,
     val ifLimitVideo: Boolean,
     val label: Any,
     val library: String,
     val playInfo: List<PlayInfoX>,
-    val playUrl: String,
-    val played: Boolean,
+    val playUrl: String,//播放地址
+    val played: Boolean,//是否喜欢
     val provider: ProviderX,
     val reallyCollected: Boolean,
     val recallSource: String,
@@ -178,8 +178,8 @@ data class rDataX(
     val resourceType: String,
     val searchWeight: Int,
     val src: Int,
-    val tags: List<TagX>,
-    val title: String,
+    val tags: List<TagX>,//tags
+    val title: String,//标题
     val titlePgc: String,
     val type: String,
     val videoPosterBean: VideoPosterBeanX,

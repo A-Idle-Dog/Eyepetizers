@@ -8,16 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="30dp">
 
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop" />
+        <FrameLayout
+            android:layout_width="147dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/iv_center_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/stop1"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                android:maxLines="2" />
+                android:maxLines="2"/>
 
             <TextView
                 android:id="@+id/tv_tag"
@@ -47,9 +58,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
                 android:textColor="#999999"
                 android:textSize="13sp"/>
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"/>
 </LinearLayout>
