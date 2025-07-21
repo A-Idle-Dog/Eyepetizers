@@ -24,15 +24,18 @@ class relatedViewModel : ViewModel() {
     private val _commentList = MutableLiveData<List<Comment>>()
     val commentList: LiveData<List<Comment>> = _commentList
 
-    fun getdata(firstItem : invokeitem){
+    fun getdata(firstItem: invokeitem) {
         viewModelScope.launch {
-            try{
+            try {
                 val response = relatedApivice.getRelatedData(firstItem.id)
-                val validItem = response.itemList.filter{item->
+                val validItem = response.itemList.filter { item ->
                     item.type == "videoSmallCard" && item.data != null
                 }
                 val mappedList = validItem.mapNotNull { item ->
-                    item.data?.let { data->
+                    item.data?.let { data ->
+                        // 修复点1：安全处理tags字段
+                        val tagName = data.tags?.firstOrNull()?.name ?: ""
+
                         invokeitem(
                             playuri = data.playUrl,
                             cover = data.cover?.feed ?: "",
@@ -40,23 +43,25 @@ class relatedViewModel : ViewModel() {
                             title = data.title,
                             author = data.author?.name ?: "未知作者",
                             authoricon = data.author?.icon ?: "",
-                            tags = data.tags[0].name,
+                            // 修复点2：使用安全获取的tagName
+                            tags = tagName,
                             des = data.description,
                             likecount = data.consumption?.realCollectionCount ?: 0,
-                            collectcount = data.consumption?.collectionCount ?: 0
+                            collectcount = data.consumption?.collectionCount ?: 0,
+                            isLike = data.collected,
+                            isCollect = data.reallyCollected,
+                            shareUrl = data.webUrl.raw
                         )
                     }
                 }
                 Log.d("fffffffff", "getdata: $mappedList")
-                val maxList = listOf(firstItem)+mappedList
+                val maxList = listOf(firstItem) + mappedList
                 _relatedList.value = maxList
-            }catch (e:Exception){
-                e.printStackTrace()
-                Log.d("fffffffff", "getdata: $e")
+            } catch (e: Exception) {
+                // 修复点3：添加更有意义的错误日志
+                Log.e("relatedViewModel", "获取相关数据失败: ${e.message}", e)
             }
         }
-
-
     }
     /*
     fun getcomment(firstItem:invokeitem){

@@ -64,6 +64,17 @@ class VideoActivity : AppCompatActivity() {
     @JvmField
     var collectcount: Int = 0
 
+    @Autowired
+    @JvmField
+    var isLike: Boolean = false
+
+    @Autowired
+    @JvmField
+    var isCollect: Boolean = false
+
+    @Autowired
+    @JvmField
+    var shareUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +105,10 @@ class VideoActivity : AppCompatActivity() {
             tags,
             des,
             likecount,
-            collectcount
+            collectcount,
+            isLike,
+            isCollect,
+            shareUrl
         )
     }
 

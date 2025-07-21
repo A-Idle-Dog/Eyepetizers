@@ -68,7 +68,7 @@ class homelogadapter() : PagingDataAdapter<Daily, RecyclerView.ViewHolder>(NewsD
             is TextCardViewHolder -> {
                 val item = getItem(position)
                 if (item != null) {
-                    holder.textView.text = item.data.text
+                    holder.textView.text = "#"+ item.data.text
                 }
             }
             is FollowCardViewHolder -> {
@@ -81,7 +81,6 @@ class homelogadapter() : PagingDataAdapter<Daily, RecyclerView.ViewHolder>(NewsD
                         .into(holder.authorcoverImageView)
                     Glide.with(holder.videocoverImageView.context)
                         .load(item.data.content.data.cover.feed)
-                        .placeholder(R.drawable.ic_launcher_background)
                         .error(R.drawable.ic_launcher_foreground)
                         .into(holder.videocoverImageView)
                     holder.videotitleTextView.text = item.data.content.data.title

@@ -1,5 +1,6 @@
 package com.example.module_home.PagingSource
 
+import android.net.Uri
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -14,13 +15,13 @@ class homelogPagingSource(private val logApiservice: logApiservice) :
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Daily> {
         return try {
-            val page = params.key ?: 1
-            val response = logApiservice.getlogDate(page)
-            Log.d("Paging", "Loaded page $page, items: ${response.itemList.size}")
+            val pageUrl = params.key
+            val response = logApiservice.getlogDate(pageUrl)
+            Log.d("Paging", "Loaded page $pageUrl, items: ${response.itemList.size}")
             LoadResult.Page(
                 data = response.itemList,
                 prevKey = null,
-                nextKey = if (response.itemList.isEmpty()) null else page + 1
+                nextKey = if (response.itemList.isEmpty()) null else pageUrl
             )
         }catch (e: Exception){
             Log.e("Paging", "Load error", e)

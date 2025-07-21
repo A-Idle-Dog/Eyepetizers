@@ -60,8 +60,9 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@id/ivLike"
+        app:layout_constraintStart_toEndOf="@+id/ivLike"
         app:layout_constraintTop_toTopOf="@id/ivLike"
+        android:layout_marginStart="5dp"
         tools:text="146"/>
 
     <!-- 点赞按钮 -->
@@ -69,9 +70,10 @@
         android:id="@+id/ivLike"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvUsername"/>
+        app:layout_constraintTop_toTopOf="@id/tvUsername"
+        android:src="@drawable/love" />
 
     <!-- 评论内容 -->
     <TextView

@@ -113,7 +113,8 @@
             <ImageView
                 android:id="@+id/likeIcon"
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:src="@drawable/love"/>
 
             <TextView
                 android:id="@+id/likeCount"
@@ -135,7 +136,8 @@
             <ImageView
                 android:id="@+id/collectIcon"
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:src="@drawable/collect"/>
 
             <TextView
                 android:id="@+id/collectCount"
@@ -157,7 +159,8 @@
             <ImageView
                 android:id="@+id/shareIcon"
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:src="@drawable/share"/>
 
             <TextView
                 android:layout_width="wrap_content"

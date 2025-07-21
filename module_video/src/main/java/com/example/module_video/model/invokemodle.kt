@@ -14,5 +14,8 @@ data class invokeitem(
     val tags: String,
     val des:String,
     val likecount: Int,
-    val collectcount: Int
+    val collectcount: Int,
+    var isLike: Boolean,
+    var isCollect: Boolean,
+    val shareUrl: String
 ) : Parcelable
