@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".photo"
+    android:background="@color/black">
+
+    <!-- 图片查看区域 - ViewPager2 (占满全屏) -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 顶部控制栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical">
+
+        <!-- 返回按钮 -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="返回" />
+
+        <TextView
+            android:id="@+id/tvImageCounter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1/9"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="2" />
+
+        <ImageButton
+            android:id="@+id/btnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="更多操作" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/ivUserAvatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="2" />
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上海 · 1小时前"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="2" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 描述文本 -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="这里显示图片的详细描述信息"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="2" />
+
+        <!-- 话题标签 -->
+        <TextView
+            android:id="@+id/tvHashtag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="#风景 #旅行摄影"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="2" />
+
+        <!-- 互动按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- 点赞按钮 -->
+            <LinearLayout
+                android:id="@+id/layoutLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnLike"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/love"
+                    android:contentDescription="点赞" />
+
+                <TextView
+                    android:id="@+id/tvLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="72"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutCollect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnCollect"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="评论"
+                    android:src="@drawable/collect"/>
+
+                <TextView
+                    android:id="@+id/tvCollect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="2" />
+            </LinearLayout>
+
+            <ImageButton
+                android:src="@drawable/share"
+                android:id="@+id/btnShare"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="分享" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
