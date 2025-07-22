@@ -16,19 +16,13 @@ import com.example.module_square.SquareFragment
 
 class HomeActivity : AppCompatActivity() {
 
-    // 声明ViewBinding变量
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // 初始化ViewBinding
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root) // 使用binding的根视图
-
+        setContentView(binding.root)
         enableEdgeToEdge()
-
-        // 使用binding对象访问视图
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

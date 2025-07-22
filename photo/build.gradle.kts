@@ -1,19 +1,21 @@
 plugins {
     id("kotlin-kapt")
     id("com.android.library")
+    //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.example.module_video"
+    namespace = "com.example.photo"
     compileSdk = 35
 
     defaultConfig {
+        //applicationId = "com.example.photo"
         minSdk = 24
         targetSdk = 34
+        //versionCode = 1
+        //versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -36,7 +38,6 @@ android {
         enable = true
     }
 }
-
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.name)
@@ -44,20 +45,14 @@ kapt {
 }
 
 dependencies {
-    implementation(project(":lib_network"))
-    implementation(project(":LIB"))
-    implementation(project(":lib_net"))
+
     //router
     implementation ("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2") // 使用kapt
 
-    //retrofit
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
-
-    //viewmodel
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation ("androidx.core:core-ktx:1.9.0")
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    kapt ("com.github.bumptech.glide:compiler:4.13.2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -67,19 +62,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //glide
-    implementation ("com.github.bumptech.glide:glide:4.13.2")
-    kapt ("com.github.bumptech.glide:compiler:4.13.2")
-
-    // ===== ExoPlayer 依赖 =====
-    // 核心库
-    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
-
-    // UI 组件库
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
-
-    implementation("org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.0")
-
-
 }

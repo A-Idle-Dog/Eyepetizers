@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
     implementation(project(":module_video"))
+    implementation(project(":photo"))
 
     //paging
     implementation ("androidx.paging:paging-runtime:3.0.0-beta01")

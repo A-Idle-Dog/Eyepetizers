@@ -1,5 +1,6 @@
 package com.example.module_square.adpter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -85,21 +86,28 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                 val position =bindingAdapterPosition
                 if (position!=RecyclerView.NO_POSITION){
                     val data=getItem(position)
+                    val safeTag = if (data?.tags.isNullOrEmpty()) {
+                        ""
+                    } else {
+                        data?.tags?.get(0)?.name ?: ""
+                    }
                     val arrayList = data?.picUrls?.let { ArrayList(it) }
+                    Log.d("wyfwyf", "onBindViewHolder: $arrayList")
                    ARouter.getInstance()
-                       .build("/module_video/VideoActivity")
+                       .build("/photo/photo")
                        .withStringArrayList("picUrls", arrayList)
                        .withString("icon", data?.icon)
                        .withString("author", data?.author)
                        .withString("title",data?.title)
                        .withInt("likecount", data?.clloect!!)
                        .withInt("collectcount",data.realCollect)
-                       .withString("tag",data.tags.get(0).name)
+                       .withString("tag",safeTag)
                        .withBoolean("isliked",data.liked)
                        .withInt("uid" ,data.uid)
                        .withString("ip",data.ip)
                        .withLong("time",data.time)
                        .navigation()
+                }
             }
 
             }
@@ -107,7 +115,7 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
 
     }
 
-    }
+
 
 
 

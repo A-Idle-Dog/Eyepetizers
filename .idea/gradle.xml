@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/module_hot" />
             <option value="$PROJECT_DIR$/module_square" />
             <option value="$PROJECT_DIR$/module_video" />
+            <option value="$PROJECT_DIR$/photo" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

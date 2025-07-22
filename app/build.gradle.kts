@@ -95,6 +95,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation ("com.squareup.leakcanary:leakcanary-android:2.8.1")
 }
 
 // 添加 KAPT 内存配置（解决常见问题）
