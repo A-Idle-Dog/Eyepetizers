@@ -74,7 +74,12 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
             Glide.with(itemView.context)
                 .load(data.icon).circleCrop()
                 .into(author)
-            title.text=data.title
+            if (data.title!=""){
+                title.text=data.title
+            }else{
+                title.text=data.author
+            }
+
         }
         init {
             itemView.setOnClickListener {

@@ -64,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分类"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:background="@drawable/viewpager_bg"/>
 
     </LinearLayout>
 

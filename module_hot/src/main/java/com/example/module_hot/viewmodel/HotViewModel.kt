@@ -3,7 +3,6 @@ package com.example.module_hot.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.module_hot.bean.HotBean
-import com.example.module_hot.bean.VideoItem
 import com.example.module_hot.retrofit.HotNet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

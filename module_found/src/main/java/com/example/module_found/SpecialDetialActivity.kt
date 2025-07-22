@@ -5,12 +5,9 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.lib.BaseActivity
 import com.example.module_found.adpter.RvSpDetailAdpter
 import com.example.module_found.databinding.ActivitySpecialDetialBinding
-import com.example.module_found.databinding.ItemSpecialDetailBinding
 import com.example.module_found.viewmodel.SpecialViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -83,7 +79,7 @@ class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
         }
     }
 
-    fun getData(id: String) {
+    private fun getData(id: String) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vmSpecial.getSpecialData(id)
@@ -96,5 +92,12 @@ class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
             }
 
         }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==android.R.id.home){
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

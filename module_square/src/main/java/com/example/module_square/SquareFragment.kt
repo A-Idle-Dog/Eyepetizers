@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.lib.BaseFragment
 import com.example.module_square.adpter.reAdpter
 import com.example.module_square.databinding.FragmentSquareBinding
@@ -39,9 +41,23 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         squareViewModule= ViewModelProvider(this)[SquareViewModule::class.java]
-        val layoutManager = GridLayoutManager(context,2)
+        val layoutManager =  StaggeredGridLayoutManager(
+            2,
+            StaggeredGridLayoutManager.VERTICAL
+        )
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        mBinding?.rvCom?.itemAnimator?.changeDuration = 0
         mBinding?.rvCom?.layoutManager= layoutManager
         mBinding?.rvCom?.adapter=mAdpter
+        mBinding?.rvCom?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState:Int){
+                super.onScrollStateChanged(recyclerView, newState)
+                // 当滚动停止时检查并修正布局
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    layoutManager.invalidateSpanAssignments()
+                }
+            }
+        })
         getData()
 
     }
