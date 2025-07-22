@@ -60,7 +60,7 @@ class RvAdpter: ListAdapter<VideoItem,RvAdpter.rvHolder>(VideoDiffCallback()) {
 
     override fun onBindViewHolder(holder: rvHolder, position: Int) {
         val item=getItem(position)
-        holder?.apply {
+        holder.apply {
             v.text= item.data?.author?.name ?: "暂无信息"
             v1.text= item.data?.duration?.time() ?: "0:00"
             v4.text="#"+ (item.data?.category ?: "")

@@ -22,41 +22,58 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"/>
 
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <TextView
             android:id="@+id/tv_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="简介"
             android:textSize="20dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#878787"
+            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swip"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="刷新">
+            android:layout_height="wrap_content"
+            android:contentDescription="刷新"
+            app:layout_constraintTop_toBottomOf="@id/tv_des"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_classify_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="5dp"/>
+                android:paddingHorizontal="12dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="80dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        app:pressedTranslationZ="10dp"
         android:contentDescription="回到顶部"
         app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"/>
 
