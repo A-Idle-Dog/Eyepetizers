@@ -80,4 +80,6 @@ dependencies {
     implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 
     implementation("org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.0")
+
+
 }
