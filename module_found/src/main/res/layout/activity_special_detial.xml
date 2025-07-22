@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="简介"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_gravity="bottom"/>
+                android:textStyle="bold" />
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tool_detail"
                 android:layout_width="match_parent"

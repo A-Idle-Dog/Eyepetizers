@@ -49,7 +49,9 @@ class SquarePagingSource():PagingSource<Int,Rec>() {
                                consumption.realCollectionCount,
                                collected,
                                tags?: emptyList(),
-                               id
+                               id,
+                               city,
+                               createTime
                            )
                        )
                    }

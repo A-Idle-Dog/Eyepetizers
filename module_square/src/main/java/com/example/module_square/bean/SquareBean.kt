@@ -1,5 +1,7 @@
 package com.example.module_square.bean
 
+import java.sql.Time
+
 /**
  *description:能看小说的app
  * author 王以飞
@@ -159,6 +161,7 @@ data class Rec(
     val realCollect :Int,
     val liked:Boolean,
     val tags: List<RecTag>,
-    val uid: Int
-
+    val uid: Int,
+    val ip:String,
+    val time: Long
 )

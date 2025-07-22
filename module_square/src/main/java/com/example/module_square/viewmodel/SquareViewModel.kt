@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * date 2025-2-18
  */
 class SquareViewModule : ViewModel() {
-    private var _TabStateFlow = MutableStateFlow<SquareBean?>(null)
+    /*private var _TabStateFlow = MutableStateFlow<SquareBean?>(null)
     val tabStateFlow : StateFlow<SquareBean?>
         get() = _TabStateFlow.asStateFlow()
     private  var _NetState = MutableLiveData<NetStatus>()
@@ -32,7 +32,7 @@ class SquareViewModule : ViewModel() {
         get() = _NetState
 
 
-    /*fun getTabData()  {
+    fun getTabData()  {
         _NetState.value=NetStatus.LOADING
 
             viewModelScope.launch (Dispatchers.IO){
@@ -48,7 +48,8 @@ class SquareViewModule : ViewModel() {
         }
     }*/
     fun getSquare(): Flow<PagingData<Rec>> {
-        return Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
+
+        return Pager(PagingConfig(20,10)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
     }
     //fun getSquare()=Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
     }
