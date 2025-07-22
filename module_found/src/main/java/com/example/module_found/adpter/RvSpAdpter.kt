@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.module_found.R
 import com.example.module_found.SpecialDetialActivity
-import com.example.module_found.bean.Banner2Item
-import com.example.module_found.bean.SpecialBean
 import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.databinding.ItemSpecialBinding
 
@@ -20,14 +19,12 @@ class RvSpAdpter(private val specialList: List<SpecialDetailBean>):RecyclerView.
             itemView.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position!=RecyclerView.NO_POSITION){
-                    val special = specialList[position]
-                    binding.imSpecial.setOnClickListener {
+                        val special = specialList[position]
                         SpecialDetialActivity.actionStart(itemView.context,
-                            special?.id.toString(),
+                            special.id.toString(),
                             special.brief.toString(),
-                            special?.headerImage?.replace("http://", "https://").toString(),
+                            special.headerImage?.replace("http://", "https://").toString(),
                             binding.imSpecial)
-                    }
                 }
             }
         }
@@ -48,6 +45,7 @@ class RvSpAdpter(private val specialList: List<SpecialDetailBean>):RecyclerView.
         val imUrl = item.headerImage?.replace("http://","https://")
         Glide.with(holder.itemView.context)
             .load(imUrl)
+            .placeholder(R.drawable.loading2)
             .into(holder.v)
     }
 }

@@ -10,7 +10,8 @@
         android:padding="2dp"
         android:gravity="center"
         android:text="分类"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:background="@drawable/viewpager_bg"/>
 
 
 </LinearLayout>

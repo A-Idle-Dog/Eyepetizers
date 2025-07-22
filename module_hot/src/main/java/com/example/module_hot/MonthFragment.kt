@@ -1,59 +1,77 @@
 package com.example.module_hot
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lib.BaseFragment
+import com.example.module_hot.adpter.RvAdpter
+import com.example.module_hot.databinding.FragmentMonthBinding
+import com.example.module_hot.viewmodel.HotViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MonthFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MonthFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
+    private lateinit var vmHot :HotViewModel
+    private val mAdpter :RvAdpter by lazy {
+        RvAdpter()
+    }
+    companion object{
+        fun new(type:String)=MonthFragment().apply {
+            arguments = Bundle().apply {
+                putString("type",type)
+            }
         }
     }
+    /*override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // 存入一个标记，确保系统不销毁该 Fragment
+        outState.putBoolean("KEY_KEEP_ALIVE", true)
+    }*/
+
+    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMonthBinding {
+        return FragmentMonthBinding.inflate(inflater, container, false)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_month, container, false)
+        //return inflater.inflate(R.layout.fragment_month, container, false)
+        return mBinding?.root ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MonthFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MonthFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("MonthFragment", "onViewCreated: 视图创建成功")
+        vmHot=ViewModelProvider(this)[HotViewModel::class.java]
+        mBinding?.rvMon?.layoutManager =LinearLayoutManager(this.context)
+        mBinding?.rvMon?.adapter=mAdpter
+        val type = arguments?.getString("type") ?: return
+        if (savedInstanceState == null) {
+            getHot(type)
+        }
+
+
+    }
+    private fun getHot(type:String){
+        viewLifecycleOwner.lifecycleScope.launch {
+            vmHot.getHot(type)
+            vmHot.hotStateFlow.collectLatest { result ->
+                result?.itemList?.let { items ->
+                    mAdpter.submitList(items.toList())
                 }
             }
+
+        }
     }
+
+
 }

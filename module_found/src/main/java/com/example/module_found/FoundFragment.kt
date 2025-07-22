@@ -1,33 +1,23 @@
 package com.example.module_found
 
-import android.graphics.Outline
-import android.graphics.Rect
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.BaseFragment
 import com.example.module_found.adpter.RvCateAdpter
-import com.example.module_found.viewmodel.CotegoryViewModel
-import com.example.module_found.bean.CategoryBean
-import com.example.module_found.databinding.FragmentFoundBinding
-import android.util.TypedValue
-import android.view.ViewTreeObserver
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.module_found.adpter.RvSpAdpter
-import com.example.module_found.bean.Banner2Item
-import com.example.module_found.bean.SpecialBean
+import com.example.module_found.bean.CategoryBean
 import com.example.module_found.bean.SpecialDetailBean
+import com.example.module_found.databinding.FragmentFoundBinding
+import com.example.module_found.viewmodel.CotegoryViewModel
 import com.example.module_found.viewmodel.SpecialViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
 
 
 class FoundFragment :BaseFragment<FragmentFoundBinding>() {
@@ -70,6 +60,7 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getCategory() {
         viewLifecycleOwner.lifecycleScope.launch {
             mvCate.getCategoryData()
@@ -77,7 +68,11 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
                 it?.let {
                     cateList.clear()
                     cateList.addAll(it)
-                    mBinding?.rvClassify?.adapter = mAdpter
+                    if (mBinding?.rvClassify?.adapter == null) {
+                        mBinding?.rvClassify?.adapter = mAdpter
+                    } else {
+                        mAdpter.notifyDataSetChanged() // 局部刷新更优，如 notifyItemRangeChanged
+                    }
                 }
             }
 

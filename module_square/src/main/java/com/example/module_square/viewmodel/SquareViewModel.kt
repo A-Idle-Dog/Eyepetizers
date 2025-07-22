@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,6 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.example.module_square.bean.TabListBean
 import com.example.lib.NetStatus
+import com.example.module_square.bean.SquareBean
+import com.example.module_square.pagingsource.SquarePagingSource
 import com.example.module_square.retrofit.Square
 /**
  *description:能看小说的app
@@ -19,15 +24,15 @@ import com.example.module_square.retrofit.Square
  * date 2025-2-18
  */
 class SquareViewModule : ViewModel() {
-    private var _TabStateFlow = MutableStateFlow<TabListBean?>(null)
-    val tabStateFlow : StateFlow<TabListBean?>
+    private var _TabStateFlow = MutableStateFlow<SquareBean?>(null)
+    val tabStateFlow : StateFlow<SquareBean?>
         get() = _TabStateFlow.asStateFlow()
     private  var _NetState = MutableLiveData<NetStatus>()
     val netState: LiveData<NetStatus>
         get() = _NetState
 
 
-    fun getTabData()  {
+    /*fun getTabData()  {
         _NetState.value=NetStatus.LOADING
 
             viewModelScope.launch (Dispatchers.IO){
@@ -41,8 +46,6 @@ class SquareViewModule : ViewModel() {
             }
 
         }
-    }
-
-
-
+    }*/
+    fun getSquare()=Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
     }

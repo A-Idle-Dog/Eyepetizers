@@ -2,6 +2,7 @@ package com.example.module_square.retrofit
 
 import com.example.lib.net.Retrofit
 import com.example.module_square.api.ChildTabService
+import com.example.module_square.api.SquareService
 import com.example.module_square.api.TabService
 
 /**
@@ -14,4 +15,5 @@ object Square {
     val tabService: TabService = Retrofit.getService(TabService::class.java)
 
     val childTabService: ChildTabService = Retrofit.getService(ChildTabService::class.java)
+    val squareService:SquareService=Retrofit.getService(SquareService::class.java)
 }
