@@ -44,7 +44,12 @@ class SquarePagingSource():PagingSource<Int,Rec>() {
                                owner.nickname,
                                if (resourceType == "ugc_picture") urls else null,
                                resourceType,
-                               if (resourceType == "ugc_video") playUrl else null
+                               if (resourceType == "ugc_video") playUrl else null,
+                               consumption.collectionCount,
+                               consumption.realCollectionCount,
+                               collected,
+                               tags,
+                               id
                            )
                        )
                    }

@@ -154,5 +154,11 @@ data class Rec(
     val author:String,
     val picUrls:List<String>?,
     val type: String,
-    val palyUrl:String?
+    val palyUrl:String?,
+    val clloect:Int,
+    val realCollect :Int,
+    val liked:Boolean,
+    val tags: List<RecTag>,
+    val uid: Int
+
 )

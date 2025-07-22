@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.module_video"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -70,7 +70,7 @@ dependencies {
 
     //glide
     implementation ("com.github.bumptech.glide:glide:4.13.2")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+    kapt ("com.github.bumptech.glide:compiler:4.13.2")
 
     // ===== ExoPlayer 依赖 =====
     // 核心库
