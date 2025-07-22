@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.module_home"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         //applicationId = "com.example.module_home"
@@ -50,7 +50,7 @@ kapt {
 dependencies {
     //glide
     implementation ("com.github.bumptech.glide:glide:4.13.2")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+    kapt ("com.github.bumptech.glide:compiler:4.13.2")
 
     implementation(project(":module_video"))
     implementation(project(":lib_network"))

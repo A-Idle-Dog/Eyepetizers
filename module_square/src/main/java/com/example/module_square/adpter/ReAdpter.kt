@@ -1,16 +1,14 @@
 package com.example.module_square.adpter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.module_square.R
 import com.example.module_square.bean.Rec
-import com.example.module_square.databinding.ItemBannerBinding
 import com.example.module_square.databinding.ItemRvBinding
 
 /**
@@ -30,6 +28,16 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
 
 
 }) {
+    /*private var mInitBanner: ((reAdpter) -> Unit)? = null
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> 0
+            else -> 1
+        }
+    }
+    fun onInitBanner(ir: (reAdpter) -> Unit) {
+        mInitBanner = ir
+    }*/
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position) ?: return
@@ -41,10 +49,19 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): rvHolder {
-        val binding=ItemRvBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return rvHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
+       /* when(viewType){
+            0->{
+                val binding=ItemBannerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val vp=binding.bannerViewPager
+                mInitBanner?.invoke(this@reAdpter)
+                return BannerViewHolder(binding)
+            }else->{*/
+                val binding=ItemRvBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return rvHolder(binding)
+            //}
+        }
+    //inner class BannerViewHolder(bannerBinding: ItemBannerBinding):RecyclerView.ViewHolder(bannerBinding.root)
     inner class rvHolder(private val binding: ItemRvBinding):RecyclerView.ViewHolder(binding.root){
         private val cover = binding.ivPhoto
         private val title=binding.tvName
@@ -58,10 +75,34 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                 .into(author)
             title.text=data.title
         }
+        init {
+            itemView.setOnClickListener {
+                val position =bindingAdapterPosition
+                if (position!=RecyclerView.NO_POSITION){
+                    val data=getItem(position)
+                    val arrayList = data?.picUrls?.let { ArrayList(it) }
+                   ARouter.getInstance()
+                       .build("/module_video/VideoActivity")
+                       .withStringArrayList("picUrls", arrayList)
+                       .withString("icon", data?.icon)
+                       .withString("author", data?.author)
+                       .withString("title",data?.title)
+                       .withInt("likecount", data?.clloect!!)
+                       .withInt("collectcount",data.realCollect)
+                       .withString("tag",data.tags.get(0).name)
+                       .withBoolean("isliked",data.liked)
+                       .withInt("uid" ,data.uid)
+            }
+
+            }
+        }
 
     }
 
-}
+    }
+
+
+
 
 
 
