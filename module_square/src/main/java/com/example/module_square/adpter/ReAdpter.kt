@@ -92,6 +92,7 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                        .withString("tag",data.tags.get(0).name)
                        .withBoolean("isliked",data.liked)
                        .withInt("uid" ,data.uid)
+                       .navigation()
             }
 
             }

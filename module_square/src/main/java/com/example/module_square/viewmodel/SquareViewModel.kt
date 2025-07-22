@@ -6,17 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import kotlinx.coroutines.Dispatchers
+import com.example.lib.NetStatus
+import com.example.module_square.bean.Rec
+import com.example.module_square.bean.SquareBean
+import com.example.module_square.pagingsource.SquarePagingSource
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import com.example.module_square.bean.TabListBean
-import com.example.lib.NetStatus
-import com.example.module_square.bean.SquareBean
-import com.example.module_square.pagingsource.SquarePagingSource
-import com.example.module_square.retrofit.Square
+
 /**
  *description:能看小说的app
  * author 王以飞
@@ -47,5 +47,8 @@ class SquareViewModule : ViewModel() {
 
         }
     }*/
-    fun getSquare()=Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
+    fun getSquare(): Flow<PagingData<Rec>> {
+        return Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
+    }
+    //fun getSquare()=Pager(PagingConfig(10,5)){SquarePagingSource()}.flow.cachedIn(viewModelScope)
     }
