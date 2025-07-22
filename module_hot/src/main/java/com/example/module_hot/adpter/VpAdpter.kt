@@ -15,7 +15,7 @@ class VpAdpter(fragment:Fragment):FragmentStateAdapter(fragment.childFragmentMan
     private val typeList = listOf( "weekly","monthly", "historical")
     val nameList= listOf("周榜","月榜","总榜")
     private val typeToIdMap = mapOf(
-        "weekly" to 1001L,    // 手动指定，确保唯一
+        "weekly" to 1001L,
         "monthly" to 1002L,
         "historical" to 1003L
     )

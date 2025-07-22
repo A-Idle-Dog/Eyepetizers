@@ -64,7 +64,7 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
                 tvName.text=item?.data?.header?.title?: "未知作者"
                 tvTime.text=item?.data?.content?.data?.duration?.time()?: "0:00"
                 tvDesVideo.text=item?.data?.content?.data?.description?: "暂无描述"
-                tvAclassify.text=item?.data?.content?.data?.category?: "未分类"
+                tvAclassify.text="#"+item?.data?.content?.data?.category?: "未分类"
                 val imUrl1 = item?.data?.header?.icon?.replace("http://","https://")
                 val imUrl2 = item?.data?.content?.data?.cover?.feed?.replace("http://","https://")
                 Glide.with(itemView)
