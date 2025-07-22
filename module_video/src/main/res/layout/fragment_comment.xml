@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.commentFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fragment.commentFragment"
+android:orientation="vertical"
+android:background="@color/black">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ViewSwitcher
+        android:id="@+id/viewSwitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="pinglun" />
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
 
-</FrameLayout>
+
+
+        <ImageView
+            android:id="@+id/emptyImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/blank"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ViewSwitcher>
+
+
+</LinearLayout>

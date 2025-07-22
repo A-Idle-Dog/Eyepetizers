@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.module_home.ViewModel.viewmodel.RecommendViewModel
 import com.example.module_home.adapter.homerecommendadapter
 import com.example.module_home.databinding.FragmentHomeRecommendBinding
@@ -47,6 +48,42 @@ class homeRecommendFragment : Fragment() {
         binding.rrecyclerview.apply {
             adapter = recommendadapter
             layoutManager = LinearLayoutManager(requireContext())
+            recommendadapter.onBannerItemCLick = {
+                ARouter.getInstance()
+                    .build("/module_video/VideoActivity")
+                    .withString("playuri",it.data.playUrl)
+                    .withString("cover",it.data.cover.feed)
+                    .withInt("uid",it.data.id)
+                    .withString("title",it.data.title)
+                    .withString("author",it.data.author.name)
+                    .withString("authoricon",it.data.author.icon)
+                    .withString("tags",it.data.tags[0].name)
+                    .withString("des",it.data.description)
+                    .withInt("likecount",it.data.consumption.collectionCount)
+                    .withInt("collectcount",it.data.consumption.realCollectionCount)
+                    .withBoolean("isLike",it.data.played)
+                    .withBoolean("isCollect",it.data.collected)
+                    .withString("shareUrl",it.data.webUrl.raw)
+                    .navigation()
+            }
+            recommendadapter.onFollewItemClick = {
+                ARouter.getInstance()
+                    .build("/module_video/VideoActivity")
+                    .withString("playuri",it.data.content.data.playUrl)
+                    .withString("cover",it.data.content.data.cover.feed)
+                    .withInt("uid",it.data.content.data.id)
+                    .withString("title",it.data.content.data.title)
+                    .withString("author",it.data.content.data.author.name)
+                    .withString("authoricon",it.data.content.data.author.icon)
+                    .withString("tags",it.data.content.data.tags[0].name)
+                    .withString("des",it.data.content.data.description)
+                    .withInt("likecount",it.data.content.data.consumption.collectionCount)
+                    .withInt("collectcount",it.data.content.data.consumption.realCollectionCount)
+                    .withBoolean("isLike",it.data.content.data.played)
+                    .withBoolean("isCollect",it.data.content.data.collected)
+                    .withString("shareUrl",it.data.content.data.webUrl.raw)
+                    .navigation()
+            }
         }
         lifecycleScope.launch {
             viewModel.getPagingData().collect { rpagingData ->

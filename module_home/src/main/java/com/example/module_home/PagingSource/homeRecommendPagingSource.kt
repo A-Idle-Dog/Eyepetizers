@@ -23,7 +23,7 @@ class homerecommendPagingSource(private val recommendApiservice: recommendApiser
             Log.d("PagingSource", "Loaded ${itemList.size} items for page $page")
             LoadResult.Page(
                 data = itemList,
-                prevKey = null,
+                prevKey = if (page == 1) null else page - 1,
                 nextKey = if (itemList.isEmpty()) null else page + 1
             )
         }catch (e: Exception){

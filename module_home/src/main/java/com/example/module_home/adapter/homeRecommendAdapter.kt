@@ -9,6 +9,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.module_home.R
 import com.example.module_home.model.Recommend
 
@@ -19,6 +21,9 @@ class homerecommendadapter : PagingDataAdapter<Recommend, RecyclerView.ViewHolde
         private const val TYPE_SMALL = 1
         private const val TYPE_FOLLOW = 2
     }
+
+    var onFollewItemClick: ((Recommend) -> Unit)? = null
+    var onBannerItemCLick: ((Recommend) -> Unit)? = null
 
     object NewsDiffCallback : DiffUtil.ItemCallback<Recommend>() {
         override fun areItemsTheSame(oldItem: Recommend, newItem: Recommend): Boolean {
@@ -32,10 +37,11 @@ class homerecommendadapter : PagingDataAdapter<Recommend, RecyclerView.ViewHolde
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is rtextViewHolder -> {
-                holder.textview.text = getItem(position)?.data?.text
+                holder.textview.text = "#" +getItem(position)?.data?.text
             }
 
             is r2imageViewHolder -> {
+
                 val id  = getItem(position)?.data?.content?.data?.cover?.feed
                 Log.d("urii", "onBindViewHolder: $id")
                 Glide.with(holder.videocoverImageView)
@@ -47,7 +53,7 @@ class homerecommendadapter : PagingDataAdapter<Recommend, RecyclerView.ViewHolde
                 if(duration!=null){
                     holder.videoduration.text = duration.secondsToTimeString()
                 }
-                holder.videotags.text = getItem(position)?.data?.category
+                holder.videotags.text = "#"+ getItem(position)?.data?.category
 
             }
 
@@ -109,12 +115,24 @@ class homerecommendadapter : PagingDataAdapter<Recommend, RecyclerView.ViewHolde
         val videoresoureceTextView =view.findViewById<TextView>(R.id.video_resourece)
         val videoduration = view.findViewById<TextView>(R.id.video_duration)
         val videotags = view.findViewById<TextView>(R.id.video_tag)
+
+        init {
+            itemView.setOnClickListener {
+                onFollewItemClick?.invoke(getItem(adapterPosition)!!)
+            }
+        }
     }
     inner class r2imageViewHolder(view: View): RecyclerView.ViewHolder(view){
         val videocoverImageView =view.findViewById<ImageView>(R.id.iv_cover)
         val videotitleTextView =view.findViewById<TextView>(R.id.tv_title)
         val videoduration = view.findViewById<TextView>(R.id.tv_duration)
         val videotags = view.findViewById<TextView>(R.id.tv_tag)
+
+        init {
+            itemView.setOnClickListener {
+                onBannerItemCLick?.invoke(getItem(adapterPosition)!!)
+            }
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

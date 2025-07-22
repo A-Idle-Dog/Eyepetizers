@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 object homecommendRepository {
 
-    private const val PAGE_SIZE = 10
+    private const val PAGE_SIZE = 50
 
     private val recommendApiservice = RetrofitClient.getService(com.example.module_home.apiService.recommendApiservice::class.java)
 

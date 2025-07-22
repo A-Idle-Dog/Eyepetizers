@@ -63,6 +63,9 @@ class homeLogFragment : Fragment() {
                     .withString("des",it.data.content.data.description)
                     .withInt("likecount",it.data.content.data.consumption.collectionCount)
                     .withInt("collectcount",it.data.content.data.consumption.realCollectionCount)
+                    .withBoolean("isLike",it.data.content.data.collected)
+                    .withBoolean("isCollect",it.data.content.data.reallyCollected)
+                    .withString("shareUrl",it.data.content.data.webUrl.raw)
                     .navigation()
             }
         }

@@ -3,11 +3,9 @@ package com.example.module_video
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -66,6 +64,17 @@ class VideoActivity : AppCompatActivity() {
     @JvmField
     var collectcount: Int = 0
 
+    @Autowired
+    @JvmField
+    var isLike: Boolean = false
+
+    @Autowired
+    @JvmField
+    var isCollect: Boolean = false
+
+    @Autowired
+    @JvmField
+    var shareUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +105,10 @@ class VideoActivity : AppCompatActivity() {
             tags,
             des,
             likecount,
-            collectcount
+            collectcount,
+            isLike,
+            isCollect,
+            shareUrl
         )
     }
 
