@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.example.lib.time
 import com.example.module_found.R
@@ -29,19 +30,47 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
 }) {
 
     inner class rvCateDetailHolder(private val binding:ItemCateDetailBinding):RecyclerView.ViewHolder(binding.root){
+        init {
+            itemView.setOnClickListener {
+                val position=bindingAdapterPosition
+                if (position!=RecyclerView.NO_POSITION){
+                    val cate =getItem(bindingAdapterPosition)
+                    cate?.data?.content?.data?.consumption?.let { it1 ->
+                        ARouter.getInstance()
+                            .build("/module_video/VideoActivity")
+                            .withString("playuri", cate.data.content.data.playUrl)
+                            .withString("cover", cate.data.content.data.cover?.feed)
+                            .withInt("uid", cate.data.content.data.idx!!)
+                            .withString("title",cate.data.content.data.title)
+                            .withString("author",cate.data.content.data.author?.name)
+                            .withString("authoricon",cate.data.header.icon)
+                            .withString("tags", cate.data.content.data.tags?.get(0)?.name)
+                            .withString("des",cate.data.content.data.description)
+                            .withInt("likecount", it1.collectionCount!!)
+                            .withInt("collectcount",cate.data.content.data.consumption.realCollectionCount!!)
+                            .navigation()
+                    }
+                }
+
+            }
+        }
+
+
         fun bind(item: Item?){
             binding?.apply {
-                tvName.text=item?.data?.header?.title
-                tvTime.text=item?.data?.content?.data?.duration?.time()
-                tvDesVideo.text=item?.data?.content?.data?.description
-                tvAclassify.text=item?.data?.content?.data?.category
+                tvName.text=item?.data?.header?.title?: "未知作者"
+                tvTime.text=item?.data?.content?.data?.duration?.time()?: "0:00"
+                tvDesVideo.text=item?.data?.content?.data?.description?: "暂无描述"
+                tvAclassify.text=item?.data?.content?.data?.category?: "未分类"
                 val imUrl1 = item?.data?.header?.icon?.replace("http://","https://")
                 val imUrl2 = item?.data?.content?.data?.cover?.feed?.replace("http://","https://")
                 Glide.with(itemView)
                     .load(imUrl1)
+                    .placeholder(R.drawable.loading2)
                     .into(ivAuthor)
                 Glide.with(itemView)
-                    .load(imUrl2).placeholder(R.drawable.loading2)
+                    .load(imUrl2)
+                    .placeholder(R.drawable.loading2)
                     .into(ivVideo)
             }
         }

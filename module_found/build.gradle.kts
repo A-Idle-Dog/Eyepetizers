@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -38,10 +39,20 @@ android {
         viewBinding = true
     }
 }
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
+}
 
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
+    implementation(project(":module_video"))
+
+    //router
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
+    implementation ("com.alibaba:arouter-api:1.5.2")
 
     //glide
     implementation ("com.github.bumptech.glide:glide:4.13.2")
