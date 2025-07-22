@@ -104,11 +104,9 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                        .navigation()
                 }
             }
-
-            }
         }
-
     }
+}
 
 
 
