@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.example.module_hot.bean.VideoItem
 import com.example.module_hot.databinding.ItemHotBinding
@@ -26,6 +27,30 @@ class RvAdpter: ListAdapter<VideoItem,RvAdpter.rvHolder>(VideoDiffCallback()) {
         val v4=binding.tvAclassify
         val v5=binding.tvDesVideo
         val v6=binding.tvTitle
+        init {
+            itemView.setOnClickListener {
+                val position=bindingAdapterPosition
+                if (position!=RecyclerView.NO_POSITION){
+                    val data =getItem(position)
+                    ARouter.getInstance()
+                        .build("/module_video/VideoActivity")
+                        .withString("playuri", data.data?.playUrl)
+                        .withString("cover", data.data?.cover?.feed)
+                        .withInt("uid", data.data?.id!!)
+                        .withString("title",data.data.title)
+                        .withString("author", data.data.author?.name)
+                        .withString("authoricon", data.data.author?.icon)
+                        .withString("tags", data.data.tags?.get(0)?.name)
+                        .withString("des",data.data.description)
+                        .withInt("likecount", data.data.consumption?.collectionCount!!)
+                        .withInt("collectcount", data.data.consumption.realCollectionCount!!)
+                        .withBoolean("isLike", data.data.collected!!)
+                        .withBoolean("isCollect", data.data.reallyCollected!!)
+                        .withString("shareUrl", data.data.webUrl?.raw)
+                        .navigation()
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): rvHolder {

@@ -1,5 +1,5 @@
 plugins {
-    //id("kotlin-kapt")
+    id("kotlin-kapt")
     id("com.android.library")
     //alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.module_square"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         //applicationId = "com.example.module_square"
@@ -40,10 +40,17 @@ android {
         viewBinding = true
     }
 }
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
+}
+
 
 dependencies {
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
+    implementation(project(":module_video"))
 
     //paging
     implementation ("androidx.paging:paging-runtime:3.0.0-beta01")
@@ -56,7 +63,7 @@ dependencies {
 
     //glide
     implementation ("com.github.bumptech.glide:glide:4.13.2")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+    kapt ("com.github.bumptech.glide:compiler:4.13.2")
 
 
     //retrofit
@@ -64,8 +71,8 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
     //arouter
-    //implementation ("com.alibaba:arouter-api:1.5.2")
-    //kapt  ("com.alibaba:arouter-compiler:1.5.2")
+    implementation ("com.alibaba:arouter-api:1.5.2")
+    kapt  ("com.alibaba:arouter-compiler:1.5.2")
 
 
 

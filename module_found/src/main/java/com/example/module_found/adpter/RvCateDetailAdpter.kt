@@ -40,7 +40,7 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
                             .build("/module_video/VideoActivity")
                             .withString("playuri", cate.data.content.data.playUrl)
                             .withString("cover", cate.data.content.data.cover?.feed)
-                            .withInt("uid", cate.data.content.data.idx!!)
+                            .withInt("uid", cate.data.content.data.id.toInt())//000
                             .withString("title",cate.data.content.data.title)
                             .withString("author",cate.data.content.data.author?.name)
                             .withString("authoricon",cate.data.header.icon)
@@ -48,6 +48,9 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
                             .withString("des",cate.data.content.data.description)
                             .withInt("likecount", it1.collectionCount!!)
                             .withInt("collectcount",cate.data.content.data.consumption.realCollectionCount!!)
+                            .withBoolean("isLike", cate.data.content.data.collected!!)
+                            .withBoolean("isCollect", cate.data.content.data.reallyCollected!!)
+                            .withString("shareUrl", cate.data.content.data.webUrl?.raw)
                             .navigation()
                     }
                 }
