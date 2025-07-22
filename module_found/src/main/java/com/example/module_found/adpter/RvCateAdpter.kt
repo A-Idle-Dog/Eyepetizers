@@ -29,7 +29,7 @@ class RvCateAdpter(private val categoryList: List<CategoryBean>):RecyclerView.Ad
                     item.description,
                     tv,
                     absoluteAdapterPosition,
-                    item.headerImage
+                    item.bgPicture.toString()
                 )
             }
         }

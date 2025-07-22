@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/tv_spename"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="你的名字"
+                android:textSize="25dp"/>
+            <ImageView
+                android:id="@+id/im_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_special_next"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="叽里咕噜"/>
+        <ImageView
+            android:id="@+id/iv_all"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:transitionName="special_image"/>
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
