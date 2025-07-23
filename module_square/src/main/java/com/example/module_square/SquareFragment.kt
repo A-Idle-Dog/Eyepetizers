@@ -1,6 +1,7 @@
 package com.example.module_square
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.lib.BaseFragment
@@ -20,6 +20,8 @@ import kotlinx.coroutines.launch
 
 class SquareFragment : BaseFragment<FragmentSquareBinding>() {
     private lateinit var squareViewModule :SquareViewModule
+    private var staggeredGridState: Parcelable? = null
+    private var firstLoad=true
     private val mAdpter :reAdpter by lazy {
         reAdpter()
     }
@@ -38,9 +40,31 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
         return mBinding?.root ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        staggeredGridState=mBinding?.rvCom?.layoutManager?.onSaveInstanceState()
+        outState.putBoolean("First",firstLoad)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        squareViewModule= ViewModelProvider(this)[SquareViewModule::class.java]
+        squareViewModule= ViewModelProvider(requireActivity())[SquareViewModule::class.java]
+        if (staggeredGridState!=null){
+            firstLoad= savedInstanceState!!.getBoolean("First",true)
+            staggeredGridState= savedInstanceState.getParcelable("staggeredGridState")
+
+        }
+        if(!firstLoad&&staggeredGridState!=null){
+            mBinding?.rvCom?.layoutManager?.onRestoreInstanceState(staggeredGridState)
+        }
+        initRecycleView()
+        if (firstLoad){
+            getData()
+            firstLoad=false
+        }
+
+    }
+    private fun initRecycleView(){
         val layoutManager =  StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
@@ -58,11 +82,10 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
                 }
             }
         })
-        getData()
 
     }
 
-    fun getData(){
+    private fun getData(){
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 squareViewModule.getSquare().collect{

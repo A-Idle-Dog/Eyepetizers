@@ -77,11 +77,11 @@ dependencies {
     implementation(project(":module_home"))
     implementation(project(":module_square"))
 
-    // ARouter 配置 - 使用最新版本
+    // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
-    // AndroidX 依赖
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
@@ -99,7 +99,7 @@ dependencies {
     debugImplementation ("com.squareup.leakcanary:leakcanary-android:2.8.1")
 }
 
-// 添加 KAPT 内存配置（解决常见问题）
+// 添加 KAPT 内存配置
 kapt {
     javacOptions {
         option("-Xmx2048m") // 增加内存限制

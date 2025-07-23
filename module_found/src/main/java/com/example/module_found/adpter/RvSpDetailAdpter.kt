@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.module_found.R
 import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.databinding.ItemSpecialDetailBinding
+import com.example.lib.time
 
 /**
  *description:能看小说的app
@@ -20,6 +21,7 @@ class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adap
         val view = binding.tvDesc
         val view2 =binding.ivCover
         val view3=binding.textView
+        val view4=binding.tvTime
         init {
             itemView.setOnClickListener {
                 val position=bindingAdapterPosition
@@ -63,6 +65,7 @@ class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adap
         holder.apply {
             view.text= item.data?.content?.data?.description ?: "暂无简介"
             view3.text= item.data?.content?.data?.title?:"暂无名称"
+            view4.text= item.data?.content?.data?.duration?.time() ?:"0:00"
             val Url = item.data?.content?.data?.cover?.feed?.replace("http://","https://")
             if (Url != null) {
                 Glide.with(itemView.context)

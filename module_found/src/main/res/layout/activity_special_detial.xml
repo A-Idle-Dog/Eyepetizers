@@ -32,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:text="简介"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5"/>
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tool_detail"
                 android:layout_width="match_parent"

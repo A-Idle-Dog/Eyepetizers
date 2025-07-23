@@ -1,15 +1,13 @@
 package com.example.module_hot
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.lib.BaseFragment
-import com.example.module_hot.adpter.RvAdpter
 import com.example.module_hot.adpter.VpAdpter
 import com.example.module_hot.databinding.FragmentHotBinding
-import com.example.module_video.model.Item
+import com.example.module_hot.transfromer.Vptransfromer
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -32,9 +30,10 @@ class HotFragment : BaseFragment<FragmentHotBinding>() {
         val adpter = VpAdpter(this)
         mBinding?.let {
             it.vpHot.isSaveEnabled = false
-            if (it?.vpHot?.adapter==null){
-                it?.vpHot?.adapter =adpter
-            }
+            if (it.vpHot.adapter ==null){
+                it.vpHot.adapter =adpter
+                it.vpHot.setPageTransformer(Vptransfromer())
+            }gi
             TabLayoutMediator(it.tabHot, it.vpHot) { tab, position ->
                 tab.text = adpter.nameList[position]
             }.attach()
