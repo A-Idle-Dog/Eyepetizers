@@ -8,20 +8,25 @@ import com.example.module_home.apiService.logApiservice
 import com.example.module_home.model.Daily
 
 class homelogPagingSource(private val logApiservice: logApiservice) :
-    PagingSource<Int, Daily>() {
-    override fun getRefreshKey(state: PagingState<Int, Daily>): Int? {
-        return null
+    PagingSource<String, Daily>() {
+    override fun getRefreshKey(state: PagingState<String, Daily>): String? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.nextKey
+        }
     }
-
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Daily> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Daily> {
         return try {
-            val pageUrl = params.key
-            val response = logApiservice.getlogDate(pageUrl)
-            Log.d("Paging", "Loaded page $pageUrl, items: ${response.itemList.size}")
+            val currentKey = params.key
+            val response = if (currentKey == null) {
+                logApiservice.getFirst()
+            } else {
+                logApiservice.getNextPage(currentKey)
+            }
+            Log.d("Paging", "Loaded page $currentKey, items: ${response.itemList.size}")
             LoadResult.Page(
                 data = response.itemList,
                 prevKey = null,
-                nextKey = if (response.itemList.isEmpty()) null else pageUrl
+                nextKey = response.nextPageUrl
             )
         }catch (e: Exception){
             Log.e("Paging", "Load error", e)

@@ -75,8 +75,6 @@ dependencies {
     implementation ("com.alibaba:arouter-api:1.5.2")
     kapt  ("com.alibaba:arouter-compiler:1.5.2")
 
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

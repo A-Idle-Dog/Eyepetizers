@@ -2,7 +2,9 @@ package com.example.module_home.model
 
 data class  rApiResponse(
     val count: Int,
-    val itemList: List<Recommend>
+    val itemList: List<Recommend>,
+    val total: Int,
+    val nextPageUrl: String
 )
 
 data class Recommend(
