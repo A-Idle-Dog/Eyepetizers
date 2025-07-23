@@ -8,6 +8,8 @@ data class photoData (
     val likecount:Int,
     val collectcount:Int,
     val tag:String,
-    val isliked:Boolean,
+    var isliked:Boolean,
     val uid:Int,
+    val createTime:String,
+    val city:String,
 )

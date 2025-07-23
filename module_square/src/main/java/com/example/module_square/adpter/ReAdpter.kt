@@ -93,6 +93,7 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                     }
                     val arrayList = data?.picUrls?.let { ArrayList(it) }
                     Log.d("wyfwyf", "onBindViewHolder: $arrayList")
+                    Log.d("wyfwyf", "onBindViewHolder: ${data?.time}")
                    ARouter.getInstance()
                        .build("/photo/photo")
                        .withStringArrayList("picUrls", arrayList)
