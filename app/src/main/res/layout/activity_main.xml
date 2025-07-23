@@ -16,9 +16,13 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
+        app:itemActiveIndicatorStyle="@null"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="55dp"
+        android:background="@color/white"
         app:menu="@menu/menu_home_bottom"
+        app:itemIconTint="@drawable/bottom_navigation_icon"
+        app:itemTextColor="@drawable/bottom_navigation_icon"
         />
 
 </LinearLayout>

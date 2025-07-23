@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomRoundedCorners">
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">8dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="follow">
+        <item name="cornerSizeTopLeft">1dp</item>
+        <item name="cornerSizeTopRight">1dp</item>
+        <item name="cornerSizeBottomLeft">1dp</item>
+        <item name="cornerSizeBottomRight">1dp</item>
+    </style>
+
+    <style name="frameLayout">
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">5dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">5dp</item>
+    </style>
+</resources>
