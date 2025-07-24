@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
@@ -9,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"> <!-- 调高封面图占比 -->
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/videocover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:adjustViewBounds="true"/>
+            app:shapeAppearanceOverlay="@style/follow" />
 
         <ImageView
             android:id="@+id/iv_center_icon"

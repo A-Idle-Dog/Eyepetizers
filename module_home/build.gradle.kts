@@ -48,6 +48,10 @@ kapt {
 }
 
 dependencies {
+    
+    //material
+    implementation("com.google.android.material:material:1.10.0")
+
     //glide
     implementation ("com.github.bumptech.glide:glide:4.13.2")
     kapt ("com.github.bumptech.glide:compiler:4.13.2")

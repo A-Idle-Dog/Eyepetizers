@@ -7,24 +7,29 @@ import com.example.module_home.apiService.recommendApiservice
 import com.example.module_home.model.Recommend
 
 class homerecommendPagingSource(private val recommendApiservice: recommendApiservice) :
-    PagingSource<Int, Recommend>() {
-    override fun getRefreshKey(state: PagingState<Int, Recommend>): Int? {
+    PagingSource<String, Recommend>() {
+    override fun getRefreshKey(state: PagingState<String, Recommend>): String? {
         return null
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Recommend> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Recommend> {
         return try {
-            val page = params.key ?: 1
-            val pageSize = params.loadSize
-            Log.d("PagingSource", "Loading page $page, pageSize $pageSize")
-            val response = recommendApiservice.getrecommendDate(page, pageSize)
+            val page = params.key
+            val response = if(page==null){
+                recommendApiservice.getrecommendDate()
+            }else{
+                recommendApiservice.getRecommendDate(page)
+            }
+            val filteredList = response.itemList.filter { item ->
+                item.type != "squareCardCollection"
+            }
             Log.d("PagingSource", "Response received: $response")
-            val itemList = response.itemList ?: emptyList()
+            val itemList = filteredList ?: emptyList()
             Log.d("PagingSource", "Loaded ${itemList.size} items for page $page")
             LoadResult.Page(
                 data = itemList,
-                prevKey = if (page == 1) null else page - 1,
-                nextKey = if (itemList.isEmpty()) null else page + 1
+                prevKey = null,
+                nextKey = response.nextPageUrl
             )
         }catch (e: Exception){
             Log.e("PagingSource", "Error loading page: ${params.key}", e)
