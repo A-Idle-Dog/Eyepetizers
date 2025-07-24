@@ -29,11 +29,12 @@ class HotFragment : BaseFragment<FragmentHotBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val adpter = VpAdpter(this)
         mBinding?.let {
+            it.vpHot.offscreenPageLimit = 3
             it.vpHot.isSaveEnabled = false
             if (it.vpHot.adapter ==null){
                 it.vpHot.adapter =adpter
                 it.vpHot.setPageTransformer(Vptransfromer())
-            }gi
+            }
             TabLayoutMediator(it.tabHot, it.vpHot) { tab, position ->
                 tab.text = adpter.nameList[position]
             }.attach()

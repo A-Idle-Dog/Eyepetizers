@@ -9,38 +9,23 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/coll_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
+            app:collapsedTitleTextColor="@color/black"
+            app:expandedTitleTextAppearance="@style/ExpandedTitleStyle"
+            app:collapsedTitleTextAppearance="@style/CollapsedTitleStyle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tool_detail"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"/>
-
-                <TextView
-                    android:id="@+id/tv_des"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="简介"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#878787"
-                    app:layout_constraintTop_toBottomOf="@id/tv_des" />
-
-            </LinearLayout>
-
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -50,15 +35,38 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简介"
+            android:padding="16dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#878787"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_des" />
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:contentDescription="刷新"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_classify_detail"

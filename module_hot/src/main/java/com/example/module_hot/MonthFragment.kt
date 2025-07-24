@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +15,13 @@ import com.example.module_hot.databinding.FragmentMonthBinding
 import com.example.module_hot.viewmodel.HotViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.example.module_hot.MyRecycle
 
 
 class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
     private lateinit var vmHot :HotViewModel
+    private lateinit var type: String
+    private var linearLayoutManager: LinearLayoutManager? = null
     private val mAdpter :RvAdpter by lazy {
         RvAdpter()
     }
@@ -32,6 +36,7 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
         super.onSaveInstanceState(outState)
         // 存入一个标记，确保系统不销毁该 Fragment
         outState.putBoolean("KEY_KEEP_ALIVE", true)
+        outState.putString("type", type)
     }*/
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMonthBinding {
@@ -50,11 +55,14 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*type = savedInstanceState?.getString("type") ?: arguments?.getString("type") ?: return*/
         Log.d("MonthFragment", "onViewCreated: 视图创建成功")
-        vmHot=ViewModelProvider(this)[HotViewModel::class.java]
-        mBinding?.rvMon?.layoutManager =LinearLayoutManager(this.context)
+
+
+        vmHot=ViewModelProvider(requireActivity())[HotViewModel::class.java]
+        mBinding?.rvMon?.layoutManager =LinearLayoutManager(requireContext())
         mBinding?.rvMon?.adapter=mAdpter
-        val type = arguments?.getString("type") ?: return
+        type = arguments?.getString("type") ?: return
         if (savedInstanceState == null) {
             getHot(type)
         }
@@ -64,12 +72,26 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
     private fun getHot(type:String){
         viewLifecycleOwner.lifecycleScope.launch {
             vmHot.getHot(type)
-            vmHot.hotStateFlow.collectLatest { result ->
+            vmHot.getHotStateFlow(type).collectLatest { result ->
                 result?.itemList?.let { items ->
-                    mAdpter.submitList(items.toList())
+                    mAdpter.submitList(items.toList()){
+                        val savedPosition = vmHot.getPosition(type)
+                        if (savedPosition!=null){
+                            linearLayoutManager?.onRestoreInstanceState(savedPosition)
+                        }else{
+                            mBinding?.rvMon?.scrollToPosition(0)
+                        }
+                    }
                 }
             }
 
+        }
+    }
+    override fun onPause() {
+        super.onPause()
+        val currentPosition = linearLayoutManager?.onSaveInstanceState()
+        if (currentPosition != null) {
+            vmHot.savePosition(type, currentPosition)
         }
     }
 

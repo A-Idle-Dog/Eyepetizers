@@ -67,6 +67,7 @@ class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adap
             view3.text= item.data?.content?.data?.title?:"暂无名称"
             view4.text= item.data?.content?.data?.duration?.time() ?:"0:00"
             val Url = item.data?.content?.data?.cover?.feed?.replace("http://","https://")
+            val authorUrl= item.data?.content?.data?.author?.icon?.replace("http://","https://")
             if (Url != null) {
                 Glide.with(itemView.context)
                     .load(Url)

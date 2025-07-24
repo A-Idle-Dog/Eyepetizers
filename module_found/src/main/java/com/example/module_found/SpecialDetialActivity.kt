@@ -50,17 +50,21 @@ class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
+        mBinding.rvClassifyDetail.layoutManager = LinearLayoutManager(this)
+        vmSpecial = ViewModelProvider(this)[SpecialViewModel::class.java]
+        initView()
+    }
+    private fun initView(){
+        setSupportActionBar(mBinding.toolDetail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val id: String = intent.getStringExtra("id") ?: ""
         val des:String=intent.getStringExtra("des")?:""
         val imgVideoUrl: String = intent.getStringExtra("imgUrl") ?: ""
         if (id.isEmpty()) {
             Toast.makeText(this@SpecialDetialActivity,"无效id",Toast.LENGTH_SHORT).show()
-
             finish()
             return
         }
-        mBinding.rvClassifyDetail.layoutManager = LinearLayoutManager(this)
-        vmSpecial = ViewModelProvider(this)[SpecialViewModel::class.java]
         getData(id)
         mBinding.collDetail.title=des
         if (imgVideoUrl.isNotEmpty()) {
@@ -68,15 +72,18 @@ class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
                 .load(imgVideoUrl)
                 .into(mBinding.imDetail)
         }
-        mBinding.btnUp.setOnClickListener {
-            mBinding.rvClassifyDetail.smoothScrollToPosition(0)
-        }
         mBinding.swip.setOnRefreshListener {
             // 触发重新加载数据
             mBinding.swip.isRefreshing = true
             getData(id)
             mBinding.swip.isRefreshing = false
         }
+
+        mBinding.btnUp.setOnClickListener {
+            mBinding.rvClassifyDetail.smoothScrollToPosition(0)
+        }
+
+
     }
 
     private fun getData(id: String) {

@@ -2,10 +2,8 @@ package com.example.module_found.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import com.example.module_found.bean.CategoryBean
 import com.example.module_found.paging.CateDetailPaging

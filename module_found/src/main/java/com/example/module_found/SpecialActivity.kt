@@ -33,7 +33,7 @@ class SpecialActivity : BaseActivity<ActivitySpecialBinding>() {
         setContentView(mBinding.root)
         mvSp = ViewModelProvider(this)[SpecialViewModel::class.java]
         mBinding.reSpecialAll.apply {
-            layoutManager=LinearLayoutManager(this@SpecialActivity)
+            layoutManager=LinearLayoutManager(context.applicationContext)
             adapter=mAdpter
         }
         getData()

@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="workwork"
-        android:textSize="30dp"
-        android:maxLines="1"/>
+        android:textSize="30sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
 </androidx.cardview.widget.CardView>

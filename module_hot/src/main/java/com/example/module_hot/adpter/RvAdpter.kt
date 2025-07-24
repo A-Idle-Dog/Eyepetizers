@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.module_hot.bean.VideoItem
 import com.example.module_hot.databinding.ItemHotBinding
 import com.example.lib.time
 import com.example.module_hot.R
+import com.example.module_hot.databinding.ItemTextBinding
 
 /**
  *description:能看小说的app
@@ -18,7 +21,12 @@ import com.example.module_hot.R
  * email 1206897770@qq.com
  * date 2025-2-18
  */
-class RvAdpter: ListAdapter<VideoItem,RvAdpter.rvHolder>(VideoDiffCallback()) {
+class RvAdpter: ListAdapter<VideoItem,RecyclerView.ViewHolder>(VideoDiffCallback()) {
+    private companion object{
+        const val item =0
+        const val text =1
+    }
+    inner class teHolder(val binding:ItemTextBinding):RecyclerView.ViewHolder(binding.root)
     inner class rvHolder(val binding: ItemHotBinding):RecyclerView.ViewHolder(binding.root){
         val v =binding.tvName
         val v1=binding.tvTime
@@ -30,7 +38,7 @@ class RvAdpter: ListAdapter<VideoItem,RvAdpter.rvHolder>(VideoDiffCallback()) {
         init {
             itemView.setOnClickListener {
                 val position=bindingAdapterPosition
-                if (position!=RecyclerView.NO_POSITION){
+                if (position!=RecyclerView.NO_POSITION&&getItemViewType(position)!= text){
                     val data =getItem(position)
                     ARouter.getInstance()
                         .build("/module_video/VideoActivity")
@@ -53,30 +61,51 @@ class RvAdpter: ListAdapter<VideoItem,RvAdpter.rvHolder>(VideoDiffCallback()) {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): rvHolder {
-        val binding = ItemHotBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return rvHolder(binding)
+    override fun getItemViewType(position: Int): Int {
+        return if (position==itemCount-1) text else item
     }
 
-    override fun onBindViewHolder(holder: rvHolder, position: Int) {
-        val item=getItem(position)
-        holder.apply {
-            v.text= item.data?.author?.name ?: "暂无信息"
-            v1.text= item.data?.duration?.time() ?: "0:00"
-            v4.text="#"+ (item.data?.category ?: "")
-            v5.text= item.data?.description ?: "暂无简介"
-            v6.text= item.data?.title ?: "暂无标题"
-            val url = item.data?.cover?.feed?.replace("http://","https://")
-            val url2= item.data?.author?.icon?.replace("http://","https://")
-            Glide.with(itemView)
-                .load(url)
-                .placeholder(R.drawable.loading2)
-                .into(v2)
-            Glide.with(itemView)
-                .load(url2)
-                .placeholder(R.drawable.loading2)
-                .into(v3)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if(viewType== text){
+            val binding=ItemTextBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            teHolder(binding)
+        }else{
+            val binding = ItemHotBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return rvHolder(binding)
+
         }
+
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (holder is rvHolder){
+            val item=getItem(position)
+            holder.apply {
+                v.text= item.data?.author?.name ?: "暂无信息"
+                v1.text= item.data?.duration?.time() ?: "0:00"
+                v4.text="#"+ (item.data?.category ?: "")
+                v5.text= item.data?.description ?: "暂无简介"
+                v6.text= item.data?.title ?: "暂无标题"
+                val url = item.data?.cover?.feed?.replace("http://","https://")
+                val url2= item.data?.author?.icon?.replace("http://","https://")
+                Glide.with(itemView)
+                    .load(url)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.loading2)
+                    .into(v2)
+                Glide.with(itemView)
+                    .load(url2)
+                    .placeholder(R.drawable.loading2)
+                    .into(v3)
+            }
+
+        }
+
+    }
+
+
+    override fun getItemCount(): Int {
+        return currentList.size+1
     }
 }
 class VideoDiffCallback : DiffUtil.ItemCallback<VideoItem>() {
@@ -87,4 +116,5 @@ class VideoDiffCallback : DiffUtil.ItemCallback<VideoItem>() {
     override fun areContentsTheSame(oldItem: VideoItem, newItem: VideoItem): Boolean {
         return oldItem == newItem
     }
+
 }

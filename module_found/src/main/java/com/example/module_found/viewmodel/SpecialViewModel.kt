@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.module_found.bean.Banner2Item
 import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.paging.AllPaging
 import com.example.module_found.retrofit.Category

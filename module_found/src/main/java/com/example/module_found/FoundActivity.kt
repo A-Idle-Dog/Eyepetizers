@@ -60,9 +60,10 @@ class FoundActivity : BaseActivity<ActivityFoundBinding>() {
         getData(categoryId)
     }
     private fun initView(){
+        //设置toolbar
         setSupportActionBar(mBinding.toolDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mBinding.toolDetail.title=intent.getStringExtra("tvClassify")
+        mBinding.collDetail.title=intent.getStringExtra("tvClassify")
         mBinding.tvDes.text=intent.getStringExtra("desc")
         /*val imUrl = intent.getStringExtra("url")?.replace("http://","https://")
         Glide.with(this)

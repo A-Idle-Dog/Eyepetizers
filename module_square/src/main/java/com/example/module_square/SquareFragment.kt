@@ -95,4 +95,8 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
 
             }
         }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding?.rvCom?.adapter = null
+    }
     }
