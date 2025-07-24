@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Openeye">
         <activity
             android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".VideoActivity"
             android:exported="true">
 

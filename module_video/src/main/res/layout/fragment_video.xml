@@ -7,7 +7,6 @@
     tools:context=".videoFragment"
     android:background="@color/black">
 
-    <!-- 顶部发布者信息 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/publisherLayout"
         android:layout_width="match_parent"
@@ -37,7 +36,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 中部：视频播放器 -->
     <FrameLayout
         android:id="@+id/videoPlayerContainer"
         android:layout_width="match_parent"
@@ -61,7 +59,6 @@
             android:visibility="visible"/>
     </FrameLayout>
 
-    <!-- 标签栏：简介/评论 -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -73,8 +70,6 @@
         app:tabIndicatorColor="@color/white"
         app:tabRippleColor="@null"
         android:background="@color/black">
-
-
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -89,7 +84,6 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <!-- 底部操作区 -->
     <LinearLayout
         android:id="@+id/bottomActionsLayout"
         android:layout_width="match_parent"
@@ -101,7 +95,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
-        <!-- 点赞 -->
         <LinearLayout
             android:id="@+id/likeLayout"
             android:layout_width="0dp"
@@ -125,7 +118,6 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- 收藏 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -148,7 +140,6 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- 分享 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

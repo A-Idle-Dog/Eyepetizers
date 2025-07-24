@@ -133,4 +133,9 @@ class VideoActivity : AppCompatActivity() {
                 orientation = ViewPager2.ORIENTATION_VERTICAL
         }
     }
+    override fun onDestroy() {
+        Log.d("LeakFix", "Activity destroying")
+        binding.viewpager2.adapter= null
+        super.onDestroy()
+    }
 }
