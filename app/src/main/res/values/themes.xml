@@ -2,5 +2,8 @@
 <resources>
 
     <style name="Theme.Openeye" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="NoRippleBottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:itemBackground">@android:color/transparent</item>
+    </style>
 
 </resources>

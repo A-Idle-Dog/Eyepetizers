@@ -276,6 +276,7 @@ class videoFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         exoPlayer.pause()
+        exoPlayer.playWhenReady = false
     }
 
     override fun onDestroy() {
@@ -285,6 +286,11 @@ class videoFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding?.run {
+            likeIcon.animate()?.cancel()
+            collectIcon.animate()?.cancel()
+            shareIcon.animate()?.cancel()
+        }
     }
+
 }
