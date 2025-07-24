@@ -92,6 +92,10 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
             }
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding?.rvClassify?.setAdapter(null)
+    }
 }
 
 

@@ -13,6 +13,8 @@ import com.example.lib.time
 import com.example.module_found.R
 import com.example.module_found.bean.Item
 import com.example.module_found.databinding.ItemCateDetailBinding
+import com.example.module_found.databinding.ItemEndBinding
+import kotlinx.coroutines.currentCoroutineContext
 
 /**
  *description:能看小说的app
@@ -30,6 +32,7 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
     }
 
 }) {
+
 
     inner class rvCateDetailHolder(private val binding:ItemCateDetailBinding):RecyclerView.ViewHolder(binding.root){
         init {
@@ -108,4 +111,6 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
         val binding = ItemCateDetailBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return rvCateDetailHolder(binding)
     }
+
+
 }

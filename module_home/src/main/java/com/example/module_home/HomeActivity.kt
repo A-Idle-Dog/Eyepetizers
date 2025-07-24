@@ -13,7 +13,8 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.module_found.FoundFragment
 import com.example.module_home.databinding.ActivityHomeBinding // 导入生成的绑定类
 import com.example.module_hot.HotFragment
-import com.example.module_square.SquareFragment
+import com.example.module_squa.SquareFragment
+
 @Route(path = "/home/HomeActivity")
 class HomeActivity : AppCompatActivity() {
 

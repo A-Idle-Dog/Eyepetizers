@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/viewpager_bg"
+                android:background="@drawable/viewpager2_bg"
                 android:text="#分类"
                 android:textSize="20dp"
                 android:textColor="@color/black"/>

@@ -3,12 +3,14 @@ package com.example.module_found.adpter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.example.module_found.R
 import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.databinding.ItemSpecialDetailBinding
 import com.example.lib.time
+import com.example.module_found.databinding.ItemEndBinding
 
 /**
  *description:能看小说的app
@@ -16,7 +18,13 @@ import com.example.lib.time
  * email 1206897770@qq.com
  * date 2025-2-18
  */
-class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adapter<RvSpDetailAdpter.rvSpDetailHolder>() {
+class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    inner class endHolder (private val binding: ItemEndBinding): RecyclerView.ViewHolder(binding.root)
+
+    private companion object{
+        private const val item=1
+        private const val end=0
+    }
     inner class rvSpDetailHolder(binding: ItemSpecialDetailBinding):RecyclerView.ViewHolder(binding.root){
         val view = binding.tvDesc
         val view2 =binding.ivCover
@@ -51,30 +59,44 @@ class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adap
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): rvSpDetailHolder {
-        val binding = ItemSpecialDetailBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return rvSpDetailHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType== end){
+            val binding=ItemEndBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return endHolder(binding)
+
+        }else{
+            val binding = ItemSpecialDetailBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return rvSpDetailHolder(binding)
+        }
     }
 
     override fun getItemCount(): Int {
-        return special.itemList?.size ?: 0
+        return (special.itemList?.size)?.plus(1) ?: 1
     }
 
-    override fun onBindViewHolder(holder: rvSpDetailHolder, position: Int) {
-        val item = special.itemList?.get(position)?: return
-        holder.apply {
-            view.text= item.data?.content?.data?.description ?: "暂无简介"
-            view3.text= item.data?.content?.data?.title?:"暂无名称"
-            view4.text= item.data?.content?.data?.duration?.time() ?:"0:00"
-            val Url = item.data?.content?.data?.cover?.feed?.replace("http://","https://")
-            val authorUrl= item.data?.content?.data?.author?.icon?.replace("http://","https://")
-            if (Url != null) {
-                Glide.with(itemView.context)
-                    .load(Url)
-                    .placeholder(R.drawable.loading2)
-                    .into(view2)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (holder is rvSpDetailHolder){
+            val item = special.itemList?.get(position)?: return
+            holder.apply {
+                view.text= item.data?.content?.data?.description ?: "暂无简介"
+                view3.text= item.data?.content?.data?.title?:"暂无名称"
+                view4.text= item.data?.content?.data?.duration?.time() ?:"0:00"
+                val Url = item.data?.content?.data?.cover?.feed?.replace("http://","https://")
+                val authorUrl= item.data?.content?.data?.author?.icon?.replace("http://","https://")
+                if (Url != null) {
+                    Glide.with(itemView.context)
+                        .load(Url)
+                        .placeholder(R.drawable.loading2)
+                        .into(view2)
+                }
             }
+
         }
 
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position==itemCount-1) end else item
     }
 }

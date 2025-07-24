@@ -13,10 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lib.BaseActivity
 import com.example.module_found.adpter.RvSpDetailAdpter
 import com.example.module_found.databinding.ActivitySpecialDetialBinding
+import com.example.module_found.databinding.ItemEndBinding
 import com.example.module_found.viewmodel.SpecialViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,7 +26,10 @@ import kotlinx.coroutines.launch
 class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
     private lateinit var vmSpecial: SpecialViewModel
 
+
+
     companion object {
+
         fun actionStart(context: Context, id: String,des:String, imgUrl: String, imgSpecial: ImageView) {
 
             val intent = Intent(context, SpecialDetialActivity::class.java).apply {
@@ -107,4 +112,5 @@ class SpecialDetialActivity : BaseActivity<ActivitySpecialDetialBinding>() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

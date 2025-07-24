@@ -1,4 +1,6 @@
-package com.example.module_square
+package com.example.module_squa
+
+import android.widget.Toast
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -9,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.lib.BaseFragment
@@ -58,6 +61,7 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
             mBinding?.rvCom?.layoutManager?.onRestoreInstanceState(staggeredGridState)
         }
         initRecycleView()
+        loadState()
         if (firstLoad){
             getData()
             firstLoad=false
@@ -69,8 +73,10 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
             2,
             StaggeredGridLayoutManager.VERTICAL
         )
+        //禁用自动调整间隙
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mBinding?.rvCom?.itemAnimator?.changeDuration = 0
+
         mBinding?.rvCom?.layoutManager= layoutManager
         mBinding?.rvCom?.adapter=mAdpter
         mBinding?.rvCom?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
@@ -95,8 +101,25 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
 
             }
         }
+    private fun loadState(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                mAdpter.loadStateFlow.collect{
+                    val refresh=it.refresh
+                    when{
+                        refresh is LoadState.Loading->{ mBinding?.pbLoad?.visibility = View.VISIBLE}
+                        refresh is LoadState.NotLoading->{
+                            mBinding?.pbLoad?.visibility  =View.GONE}
+                        refresh is LoadState.Error ->{mBinding?.pbLoad?.visibility = View.GONE
+                            val errorMsg = (refresh as LoadState.Error).error.message ?: "加载失败"
+                            Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()}
+                    }
+                }
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding?.rvCom?.adapter = null
+        mBinding?.rvCom?.setAdapter(null)
     }
-    }
+}

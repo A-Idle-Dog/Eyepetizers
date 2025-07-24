@@ -11,7 +11,7 @@ import com.example.module_square.api.TabService
  * email 1206897770@qq.com
  * date 2025-2-18
  */
-object Square {
+object    Square {
     val tabService: TabService = Retrofit.getService(TabService::class.java)
 
     val childTabService: ChildTabService = Retrofit.getService(ChildTabService::class.java)

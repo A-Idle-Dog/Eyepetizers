@@ -40,6 +40,10 @@ class HotFragment : BaseFragment<FragmentHotBinding>() {
             }.attach()
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding?.vpHot?.setAdapter(null)
+    }
 
 
 }

@@ -1,7 +1,5 @@
 package com.example.module_square.bean
 
-import java.sql.Time
-
 /**
  *description:能看小说的app
  * author 王以飞
