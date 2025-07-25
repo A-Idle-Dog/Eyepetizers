@@ -12,38 +12,57 @@ class CustomRecyclerView@JvmOverloads constructor (
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.recyclerview.R.attr.recyclerViewStyle
 ) : RecyclerView(context, attrs, defStyleAttr){
-    private var touchX = 0f
-    private var touchY = 0f
-    private var isHorizontalScroll = false
-    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
-
+    private val touch=ViewConfiguration.get(context).scaledTouchSlop
+    //起始位置
+    private var startX = 0f
+    private var startY = 0f
     override fun onInterceptTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
-                touchX = e.x
-                touchY = e.y
+                // 记录起始触摸位置
+                startX = e.x
+                startY = e.y
+                // 通知父控件暂时不要拦截触摸事件
                 parent.requestDisallowInterceptTouchEvent(true)
-                isHorizontalScroll = false
             }
             MotionEvent.ACTION_MOVE -> {
-                if (!isHorizontalScroll) {
-                    val dx = e.x - touchX
-                    val dy = e.y - touchY
-                    if (abs(dx) > touchSlop || abs(dy) > touchSlop) {
-                        if (abs(dx) > abs(dy)*1.1) {
-                            isHorizontalScroll = true
-                            parent.requestDisallowInterceptTouchEvent(false)
-                            return false
-                        }
-                    }
+                // 计算滑动距离
+                val dx = e.x - startX
+                val dy = e.y - startY
+
+                // 判断滑动方向（水平或垂直）
+                val isHorizontalScroll = abs(dx) > abs(dy) && abs(dx) > touch
+                abs(dy) > abs(dx) && abs(dy) > touch
+                if(isHorizontalScroll){
+                    //允许父类处理
+                    parent.requestDisallowInterceptTouchEvent(false)
+                    return false
+                }else{
+                    //自己处理
+                    parent.requestDisallowInterceptTouchEvent(true)
                 }
+
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                isHorizontalScroll = false
+                // 触摸结束，允许父控件拦截
                 parent.requestDisallowInterceptTouchEvent(false)
             }
+
         }
         return super.onInterceptTouchEvent(e)
+
+    }
+
+    override fun onTouchEvent(e: MotionEvent?): Boolean {
+        if (e?.action  ==MotionEvent.ACTION_MOVE){
+            val dx= (e.x).minus(startX)
+            val dy= (e.y).minus(startY)
+            val isHorizontal= abs(dx) > abs(dy) && abs(dx) >touch
+            if (isHorizontal){
+                return false
+            }
+        }
+        return super.onTouchEvent(e)
     }
 }
 

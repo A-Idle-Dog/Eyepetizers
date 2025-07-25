@@ -9,6 +9,7 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +18,22 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.data.AppDatabase
+import com.example.data.Bean.CollectVideo
+import com.example.data.Bean.FavoriteVideo
 import com.example.module_video.Adapter.tabAdapter
 import com.example.module_video.databinding.FragmentVideoBinding
 import com.example.module_video.model.invokeitem
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class videoFragment : Fragment() {
+    private lateinit var database: AppDatabase
     private var _binding: FragmentVideoBinding? = null
     private val binding get() = _binding!!
     private lateinit var exoPlayer: SimpleExoPlayer
@@ -61,6 +69,8 @@ class videoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        database = AppDatabase.getInstance(requireContext())
+
         initvt()
         initplayer(invokeitem!!)
     }
@@ -94,19 +104,21 @@ class videoFragment : Fragment() {
             .into(binding.avatarImageView)
         binding.likeCount.text = item.likecount.toString()
         binding.collectCount.text = item.collectcount.toString()
-
+        colorlike(item)
         binding.likeIcon.setOnClickListener() {
             if(!item.isLike){
                 item.isLike = true
-                binding.likeCount.text = (item.likecount + 1).toString()
+                item.likecount +=1
+                binding.likeCount.text = (item.likecount).toString()
             }else{
                 item.isLike = false
+                item.likecount -=1
                 binding.likeCount.text = (item.likecount).toString()
             }
-            colorlike(item)
             animateLike(item.isLike)
+            insertOrDeleteLikeItem(item)
         }
-
+        colorcollect(item)
         binding.collectIcon.setOnClickListener(){
             if(item.isCollect){
                 item.isCollect = false
@@ -115,8 +127,8 @@ class videoFragment : Fragment() {
                 item.isCollect = true
                 binding.collectCount.text = (item.collectcount + 1).toString()
             }
-            colorcollect(item)
             animateCollect(item.isCollect)
+            insertOrDeleteCollectItem(item)
         }
 
         binding.shareIcon.setOnClickListener(){
@@ -194,7 +206,6 @@ class videoFragment : Fragment() {
     private fun showLikeParticle() {
         val location = IntArray(2)
         binding.likeIcon.getLocationOnScreen(location)
-
         showExplosionAnimation(
             location[0] + binding.likeIcon.width / 2,
             location[1] + binding.likeIcon.height / 2
@@ -290,6 +301,36 @@ class videoFragment : Fragment() {
             likeIcon.animate()?.cancel()
             collectIcon.animate()?.cancel()
             shareIcon.animate()?.cancel()
+        }
+    }
+
+    fun insertOrDeleteLikeItem(item: invokeitem){
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (item.isLike){
+                Log.d("ROOMDATA", "已添加${item.id}")
+                database.favoriteVideoDao().insert(FavoriteVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl))
+            }else{
+                Log.d("ROOMDATA", "已删除${item.id}")
+                val existing = database.favoriteVideoDao().getFavoriteByVideoId(item.id)
+                if(existing != null){
+                    database.favoriteVideoDao().delete(existing)
+                }
+            }
+        }
+    }
+
+    fun insertOrDeleteCollectItem(item: invokeitem){
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (item.isCollect){
+                Log.d("ROOMDATA", "已添加${item.id}")
+                database.collectVideoDao().insert(CollectVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl))
+            }else{
+                Log.d("ROOMDATA", "已删除${item.id}")
+                val existing = database.collectVideoDao().getFavoriteByVideoId(item.id)
+                if(existing != null){
+                    database.collectVideoDao().delete(existing)
+                }
+            }
         }
     }
 

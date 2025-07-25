@@ -8,13 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import com.example.module_found.FoundFragment
 import com.example.module_home.HomeFragment
 import com.example.module_hot.HotFragment
+import com.example.module_my.mine
 import com.example.module_square.SquareFragment
 import com.example.openeye.R
-import com.example.openeye.databinding.ActivityMainBinding// 导入自动生成的绑定类
+import com.example.openeye.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val foundFragment = FoundFragment()
         val homeFragment = HomeFragment()
         val hotFragment = HotFragment()
+        val mineFragment = mine()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, homeFragment).commit()
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
             add(R.id.fragment_container, foundFragment)
             add(R.id.fragment_container, SquareFragment)
             add(R.id.fragment_container, hotFragment)
+            add(R.id.fragment_container, mineFragment)
+            hide(mineFragment)
             hide(foundFragment)
             hide(SquareFragment)
             hide(hotFragment)
@@ -57,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                         hide(foundFragment)
                         hide(SquareFragment)
                         hide(hotFragment)
+                        hide(mineFragment)
                         show(homeFragment)
                     }.commit()
                 }
@@ -64,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().apply {
                         hide(homeFragment)
                         hide(SquareFragment)
+                        hide(mineFragment)
                         hide(hotFragment)
                         show(foundFragment)
                     }.commit()
@@ -74,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                         hide(foundFragment)
                         hide(homeFragment)
                         hide(hotFragment)
+                        hide(mineFragment)
                         show(SquareFragment)
                     }.commit()
                 }
@@ -83,7 +89,17 @@ class MainActivity : AppCompatActivity() {
                         hide(foundFragment)
                         hide(SquareFragment)
                         hide(homeFragment)
+                        hide(mineFragment)
                         show(hotFragment)
+                    }.commit()
+                }
+                R.id.five -> {
+                    supportFragmentManager.beginTransaction().apply {
+                        hide(foundFragment)
+                        hide(SquareFragment)
+                        hide(homeFragment)
+                        hide(hotFragment)
+                        show(mineFragment)
                     }.commit()
                 }
             }

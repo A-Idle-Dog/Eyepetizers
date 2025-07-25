@@ -44,6 +44,8 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":data"))
+
     implementation(project(":lib_network"))
     implementation(project(":LIB"))
     implementation(project(":lib_net"))
@@ -81,5 +83,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.0")
 
-
+    //room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 }

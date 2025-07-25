@@ -70,7 +70,8 @@ kapt {
 
 dependencies {
     // 项目模块
-
+    implementation(project(":module_my"))
+    implementation(project(":data"))
     implementation(project(":LIB"))
     implementation(project(":module_found"))
     implementation(project(":module_hot"))

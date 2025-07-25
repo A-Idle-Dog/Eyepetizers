@@ -11,11 +11,13 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/LIB" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/lib_net" />
             <option value="$PROJECT_DIR$/lib_network" />
             <option value="$PROJECT_DIR$/module_found" />
             <option value="$PROJECT_DIR$/module_home" />
             <option value="$PROJECT_DIR$/module_hot" />
+            <option value="$PROJECT_DIR$/module_my" />
             <option value="$PROJECT_DIR$/module_square" />
             <option value="$PROJECT_DIR$/module_video" />
             <option value="$PROJECT_DIR$/photo" />
