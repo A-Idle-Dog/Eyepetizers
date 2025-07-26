@@ -2,7 +2,7 @@ package com.example.lib.net
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
+// 创建一个名为Retrofit的单例
 object Retrofit {
     private val retrofit : Retrofit by lazy {
         Retrofit.Builder()

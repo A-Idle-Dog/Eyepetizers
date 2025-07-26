@@ -13,6 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.BaseFragment
+import com.example.lib.NetControl
+import com.example.lib.net.NetWork
 import com.example.module_found.adpter.RvCateAdpter
 import com.example.module_found.adpter.RvSpAdpter
 import com.example.module_found.bean.CategoryBean
@@ -21,14 +23,16 @@ import com.example.module_found.databinding.FragmentFoundBinding
 import com.example.module_found.viewmodel.CotegoryViewModel
 import com.example.module_found.viewmodel.SpecialViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 
 
 class FoundFragment :BaseFragment<FragmentFoundBinding>() {
+    private lateinit var netControl: NetControl
     private var hasShownNetworkError = false
     private lateinit var mvCate: CotegoryViewModel
     private lateinit var mvSp: SpecialViewModel
     private var cateList = mutableListOf<CategoryBean>()
-    private  var specialList= mutableListOf<SpecialDetailBean>()
+    private var specialList = mutableListOf<SpecialDetailBean>()
     private val mAdpter: RvCateAdpter by lazy {
         RvCateAdpter(cateList)
     }
@@ -52,15 +56,16 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mvCate = ViewModelProvider(requireActivity())[CotegoryViewModel::class.java]
-        mvSp=ViewModelProvider(requireActivity())[SpecialViewModel::class.java]
+        mvSp = ViewModelProvider(requireActivity())[SpecialViewModel::class.java]
         val gridLayoutManager = GridLayoutManager(this.context, 3)
         mBinding?.rvClassify?.layoutManager = gridLayoutManager
         mBinding?.rvSpecial?.layoutManager =
             LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        netControl = NetControl(requireContext())
+        connect()
         getSpecial()
         getCategory()
-        connect()
-        mBinding?.imJump?.setOnClickListener{
+        mBinding?.imJump?.setOnClickListener {
             SpecialActivity.startSpecial(this.context)
         }
     }
@@ -97,31 +102,38 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
             }
         }
     }
-    private fun connect(){
+
+    private fun connect() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mvCate.isConnected.collect { isConnected ->
+                netControl.isConnected.collect { isConnected ->
                     when (isConnected) {
                         false -> {
-                            if (!hasShownNetworkError) {
-                                Toast.makeText(context, "网络连接失败，请检查网络", Toast.LENGTH_SHORT).show()
-                                hasShownNetworkError = true
+                            if (!NetWork.hasShownNetworkError()) {
+                                Toast.makeText(
+                                    context,
+                                    "网络连接失败，请检查网络",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                NetWork.setShownNetworkError()
                             }
                         }
-                        true -> {
-                            hasShownNetworkError = false // 网络恢复，重置标记
-                        }
 
-                        else -> {}
+                        else -> {
+                            NetWork.resetNetworkErrorState()
+                            getSpecial()
+                            getCategory()
+                        }
                     }
                 }
             }
-    } }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mBinding?.rvClassify?.setAdapter(null)
+        }
     }
-}
+        override fun onDestroyView() {
+            super.onDestroyView()
+            mBinding?.rvClassify?.setAdapter(null)
+        }
+    }
 
 
 

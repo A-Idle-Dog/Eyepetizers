@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.example.data.AppDatabase
 
 open class MyApplication :Application() {
+    var hasShownNetworkError = false
     val database: AppDatabase by lazy {
         AppDatabase.getInstance(this)
     }

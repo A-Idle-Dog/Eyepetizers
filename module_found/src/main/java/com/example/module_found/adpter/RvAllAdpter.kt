@@ -19,10 +19,12 @@ import com.example.module_found.databinding.ItemRvAllBinding
  */
 class RvAllAdpter :PagingDataAdapter<SpecialDetailBean,RvAllAdpter.rvAllHolder> (object :
     DiffUtil.ItemCallback<SpecialDetailBean>(){
+    // 判断两个item是否为同一个对象
     override fun areItemsTheSame(oldItem: SpecialDetailBean, newItem: SpecialDetailBean): Boolean {
         return oldItem.id==newItem.id
     }
 
+    // 判断两个item的内容是否相同
     override fun areContentsTheSame(
         oldItem: SpecialDetailBean,
         newItem: SpecialDetailBean

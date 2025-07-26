@@ -1,5 +1,6 @@
 package com.example.module_square.adpter
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
@@ -127,6 +128,7 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
             }
         }
 
+        @SuppressLint("SuspiciousIndentation")
         fun bind(data:Squarepic){
             currentData = data
             //currentUrl=data.coverUrl
