@@ -19,6 +19,7 @@
         <activity
             android:name=".FoundActivity"
             android:exported="true"></activity>
+
     </application>
 
 </manifest>

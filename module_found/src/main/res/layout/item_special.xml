@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:layout_height="200dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:layout_marginHorizontal="10dp">
     <ImageView
         android:id="@+id/im_special"
         android:layout_width="match_parent"
@@ -16,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="workwork"
-        android:textSize="30dp"
-        android:maxLines="1"/>
+        android:textSize="30sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
 </androidx.cardview.widget.CardView>

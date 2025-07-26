@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img1"
     tools:context=".FoundFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -21,7 +22,7 @@
            android:layout_marginBottom="12dp"/>
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/rv_classify"
-           android:background="@color/grey"
+           android:background="#F0F0F0"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginBottom="16dp"/>
@@ -42,7 +43,7 @@
            <ImageView
                android:id="@+id/im_jump"
                android:layout_width="30dp"
-               android:layout_height="25dp"
+               android:layout_height="30dp"
                android:layout_gravity="right"
                android:src="@drawable/img_special_next"
                android:layout_marginStart="8dp"/>

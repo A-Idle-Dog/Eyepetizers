@@ -3,24 +3,17 @@ package com.example.module_found
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.BaseActivity
 import com.example.module_found.adpter.RvAllAdpter
-import com.example.module_found.bean.Content
-import com.example.module_found.bean.SpecialDetailBean
 import com.example.module_found.databinding.ActivitySpecialBinding
 import com.example.module_found.viewmodel.SpecialViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SpecialActivity : BaseActivity<ActivitySpecialBinding>() {
     private lateinit var mvSp: SpecialViewModel
@@ -39,13 +32,13 @@ class SpecialActivity : BaseActivity<ActivitySpecialBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
         mvSp = ViewModelProvider(this)[SpecialViewModel::class.java]
-        mBinding?.reSpecialAll?.apply {
-            layoutManager=LinearLayoutManager(this@SpecialActivity)
+        mBinding.reSpecialAll.apply {
+            layoutManager=LinearLayoutManager(context.applicationContext)
             adapter=mAdpter
         }
         getData()
     }
-    fun getData(){
+    private fun getData(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 mvSp.getSpecialMore().collectLatest{
