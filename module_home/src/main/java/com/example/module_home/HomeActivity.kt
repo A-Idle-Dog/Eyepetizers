@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        val list  = listOf(
+        /*val list  = listOf(
             HomeFragment(),
             SquareFragment(),
             HotFragment(),
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
 
                 else -> false
             }
-        }
+        }*/
 
 
     }
