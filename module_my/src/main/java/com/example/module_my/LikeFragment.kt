@@ -40,7 +40,9 @@ class LikeFragment : Fragment() {
         val factory = FavoritesViewModelFactory(dao)
         viewModel = ViewModelProvider(this, factory).get(FavoritesViewModel::class.java)
         initAdapter()
-        upData()
+        viewModel.favoriteVideos.observe(viewLifecycleOwner){
+            (binding.likerecyclerView.adapter as FavoriteAdapter).submitList(it)
+        }
     }
 
     fun initAdapter(){
