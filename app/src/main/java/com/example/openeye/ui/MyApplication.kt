@@ -3,8 +3,12 @@ package com.example.openeye.ui
 import android.app.Application
 import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
+import com.example.data.AppDatabase
 
- open class MyApplication :Application() {
+open class MyApplication :Application() {
+    val database: AppDatabase by lazy {
+        AppDatabase.getInstance(this)
+    }
     companion object {
         lateinit var mContext: MyApplication
     }

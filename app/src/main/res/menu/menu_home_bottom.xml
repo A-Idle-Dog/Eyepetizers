@@ -7,7 +7,7 @@
         />
     <item
         android:id="@+id/two"
-        android:icon="@drawable/square"
+        android:icon="@drawable/talk"
         android:title="广场"
         />
     <item
@@ -16,9 +16,13 @@
         android:title="搜索"
         />
     <item
-
         android:id="@+id/four"
         android:icon="@drawable/hot"
         android:title="热门"
+        />
+    <item
+        android:id="@+id/five"
+        android:icon="@drawable/my"
+        android:title="我的"
         />
 </menu>

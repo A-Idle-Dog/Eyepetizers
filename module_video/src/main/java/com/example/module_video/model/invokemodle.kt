@@ -13,7 +13,7 @@ data class invokeitem(
     val authoricon: String,
     val tags: String,
     val des:String,
-    val likecount: Int,
+    var likecount: Int,
     val collectcount: Int,
     var isLike: Boolean,
     var isCollect: Boolean,

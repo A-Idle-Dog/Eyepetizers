@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.module_home.ViewModel.viewmodel.RecommendViewModel
+import com.example.module_home.adapter.footerAdapter
 import com.example.module_home.adapter.homerecommendadapter
 import com.example.module_home.databinding.FragmentHomeRecommendBinding
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ class homeRecommendFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rrecyclerview.apply {
-            adapter = recommendadapter
+            adapter = recommendadapter.withLoadStateFooter(footerAdapter({recommendadapter.retry()}))
             layoutManager = LinearLayoutManager(requireContext())
             recommendadapter.onBannerItemCLick = {
                 ARouter.getInstance()

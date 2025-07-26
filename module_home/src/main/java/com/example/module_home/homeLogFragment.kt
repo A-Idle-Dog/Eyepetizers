@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.module_home.ViewModel.viewmodel.logViewModel
+import com.example.module_home.adapter.footerAdapter
 import com.example.module_home.adapter.homelogadapter
 import com.example.module_home.databinding.FragmentHomeLogBinding
 import com.example.module_home.model.rAuthor
@@ -48,7 +49,7 @@ class homeLogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.apply {
-            adapter = mhomelogAdapter
+            adapter = mhomelogAdapter.withLoadStateFooter(footerAdapter{mhomelogAdapter.retry()})
             layoutManager = LinearLayoutManager(requireContext())
             mhomelogAdapter.onItemClick = {
                 ARouter.getInstance()
