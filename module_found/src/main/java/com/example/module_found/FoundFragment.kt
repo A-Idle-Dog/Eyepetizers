@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.BaseFragment
@@ -21,6 +24,7 @@ import kotlinx.coroutines.launch
 
 
 class FoundFragment :BaseFragment<FragmentFoundBinding>() {
+    private var hasShownNetworkError = false
     private lateinit var mvCate: CotegoryViewModel
     private lateinit var mvSp: SpecialViewModel
     private var cateList = mutableListOf<CategoryBean>()
@@ -55,6 +59,7 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
             LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         getSpecial()
         getCategory()
+        connect()
         mBinding?.imJump?.setOnClickListener{
             SpecialActivity.startSpecial(this.context)
         }
@@ -71,7 +76,7 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
                     if (mBinding?.rvClassify?.adapter == null) {
                         mBinding?.rvClassify?.adapter = mAdpter
                     } else {
-                        mAdpter.notifyDataSetChanged() // 局部刷新更优，如 notifyItemRangeChanged
+                        mAdpter.notifyDataSetChanged() // 刷新
                     }
                 }
             }
@@ -91,6 +96,30 @@ class FoundFragment :BaseFragment<FragmentFoundBinding>() {
                 }
             }
         }
+    }
+    private fun connect(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mvCate.isConnected.collect { isConnected ->
+                    when (isConnected) {
+                        false -> {
+                            if (!hasShownNetworkError) {
+                                Toast.makeText(context, "网络连接失败，请检查网络", Toast.LENGTH_SHORT).show()
+                                hasShownNetworkError = true
+                            }
+                        }
+                        true -> {
+                            hasShownNetworkError = false // 网络恢复，重置标记
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+    } }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding?.rvClassify?.setAdapter(null)
     }
 }
 

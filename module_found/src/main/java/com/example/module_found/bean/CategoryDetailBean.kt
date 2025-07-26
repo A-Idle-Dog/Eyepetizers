@@ -26,12 +26,12 @@ data class Data(
 )
 data class Header(
     val id: Long,
-    val title: String?,// 标题（如"全球动画精选"）
+    val title: String?,
     val actionUrl: String?,
-    val icon: String?,// 图标URL
-    val iconType: String?,// 图标类型（如"round"、"square"）
-    val description: String?,// 描述（如"#动画 / 收录于 每日编辑精选"）
-    val time: Long?,// 时间戳（毫秒，可能为null）
+    val icon: String?,
+    val iconType: String?,
+    val description: String?,
+    val time: Long?,
     val showHateVideo: Boolean
 )
 data class VideoContent(
@@ -43,23 +43,23 @@ data class VideoContent(
 data class VideoBeanForClient(
     val dataType: String,
     val id: Long,
-    val title: String?, // 视频标题
-    val description: String?, // 视频描述
-    val library: String?, // 所属库（如"DAILY"、"DEFAULT"）
-    val tags: List<Tag>?, // 视频标签列表
-    val consumption: Consumption?, // 消费数据（播放量、收藏量等）
-    val resourceType: String?, // 资源类型（如"video"）
+    val title: String?,
+    val description: String?,
+    val library: String?,
+    val tags: List<Tag>?,
+    val consumption: Consumption?,
+    val resourceType: String?,
     val slogan: String?,
-    val provider: Provider?, // 内容提供方
-    val category: String?, // 分类（如"动画"、"科技"）
-    val author: Author?, // 作者信息（可能为null）
-    val cover: Cover?, // 封面图信息
-    val playUrl: String?, // 播放地址
-    val thumbPlayUrl: Any?, // 缩略图播放地址（未使用，为null）
-    val duration: Int?, // 时长（秒）
-    val webUrl: WebUrl?, // 网页链接
-    val releaseTime: Long?, // 发布时间戳（毫秒）
-    val playInfo: List<PlayInfo>?, // 播放信息列表（不同清晰度）
+    val provider: Provider?,
+    val category: String?,
+    val author: Author?,
+    val cover: Cover?,
+    val playUrl: String?,
+    val thumbPlayUrl: Any?,
+    val duration: Int?,
+    val webUrl: WebUrl?,
+    val releaseTime: Long?,
+    val playInfo: List<PlayInfo>?,
     val campaign: String?,
     val waterMarks: String?,
     val ad: Boolean,

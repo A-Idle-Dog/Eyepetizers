@@ -33,9 +33,7 @@ class vpAdpter(private val list: List<String>): RecyclerView.Adapter<vpAdpter.vp
         Glide.with(holder.itemView)
             .load(url)
             .into(holder.v2)
-
-        // 如果需要显示标题，可以留空或根据需求设置
-        holder.v.text = ""
+        holder.v.text
     }
 
 

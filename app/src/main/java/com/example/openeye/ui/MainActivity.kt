@@ -12,8 +12,9 @@ import com.example.module_found.FoundFragment
 import com.example.module_home.HomeFragment
 import com.example.module_hot.HotFragment
 import com.example.module_my.mine
-import com.example.module_square.SquareFragment
+import com.example.module_squa.SquareFragment
 import com.example.openeye.R
+
 import com.example.openeye.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
