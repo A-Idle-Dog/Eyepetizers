@@ -19,6 +19,7 @@ import com.example.module_square.adpter.reAdpter
 import com.example.module_square.databinding.FragmentSquareBinding
 import com.example.module_square.viewmodel.SquareViewModule
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 
 class SquareFragment : BaseFragment<FragmentSquareBinding>() {
@@ -28,6 +29,7 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
     private val mAdpter :reAdpter by lazy {
         reAdpter()
     }
+    private var hasShownNetworkError = false
 
 
 
@@ -75,7 +77,15 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
         )
         //禁用自动调整间隙
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        mBinding?.rvCom?.itemAnimator?.changeDuration = 0
+        layoutManager.isItemPrefetchEnabled = true
+
+        mBinding?.rvCom?.itemAnimator?.apply {
+            changeDuration = 0
+            // 禁用默认动画，减少重绘
+            addDuration = 0
+            moveDuration = 0
+            removeDuration = 0
+        }
 
         mBinding?.rvCom?.layoutManager= layoutManager
         mBinding?.rvCom?.adapter=mAdpter
@@ -83,8 +93,10 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState:Int){
                 super.onScrollStateChanged(recyclerView, newState)
                 // 当滚动停止时检查并修正布局
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    layoutManager.invalidateSpanAssignments()
+                if (newState == RecyclerView.SCROLL_STATE_IDLE|| newState == RecyclerView.SCROLL_STATE_SETTLING){
+                    recyclerView.post {
+                        layoutManager.invalidateSpanAssignments()
+                    }
                 }
             }
         })
@@ -111,13 +123,23 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
                         refresh is LoadState.NotLoading->{
                             mBinding?.pbLoad?.visibility  =View.GONE}
                         refresh is LoadState.Error ->{mBinding?.pbLoad?.visibility = View.GONE
-                            val errorMsg = (refresh as LoadState.Error).error.message ?: "加载失败"
-                            Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()}
+                            val error = refresh.error
+                            val errorMsg = if (error is IOException) {
+                                "网络连接失败，请检查网络" // 断网、连接超时等网络错误
+                            } else {
+                                "加载失败：${error.message}" // 其他错误（如解析失败）
+                            }
+                            if (!hasShownNetworkError) {
+                                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                                hasShownNetworkError = true
+                            }
                     }
                 }
             }
         }
     }
+
+}
     override fun onDestroyView() {
         super.onDestroyView()
         mBinding?.rvCom?.setAdapter(null)

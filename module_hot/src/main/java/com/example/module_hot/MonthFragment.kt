@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lib.BaseFragment
 import com.example.module_hot.adpter.RvAdpter
@@ -25,6 +27,8 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
     private val mAdpter :RvAdpter by lazy {
         RvAdpter()
     }
+    private var hasShownNetworkError = false
+
     companion object{
         fun new(type:String)=MonthFragment().apply {
             arguments = Bundle().apply {
@@ -32,12 +36,6 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
             }
         }
     }
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // 存入一个标记，确保系统不销毁该 Fragment
-        outState.putBoolean("KEY_KEEP_ALIVE", true)
-        outState.putString("type", type)
-    }*/
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMonthBinding {
         return FragmentMonthBinding.inflate(inflater, container, false)
@@ -66,6 +64,7 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
         if (savedInstanceState == null) {
             getHot(type)
         }
+        connect()
 
 
     }
@@ -86,6 +85,33 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
             }
 
         }
+    }
+    private fun connect(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // 观察当前 type 对应的网络状态
+                vmHot.getNetworkStateFlow(type).collect { isConnected ->
+                    when (isConnected) {
+                        false -> { // 网络错误（断网等）
+                            if (!hasShownNetworkError) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "网络连接失败，请检查网络",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                hasShownNetworkError = true
+                            }
+                        }
+                        true -> { // 网络恢复或请求成功
+                            hasShownNetworkError = false
+                        }
+                        // 未请求或非网络错误，不处理
+                        else -> {}
+                    }
+                }
+            }
+        }
+
     }
     override fun onPause() {
         super.onPause()

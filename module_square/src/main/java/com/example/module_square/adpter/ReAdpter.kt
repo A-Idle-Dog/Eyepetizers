@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.module_square.R
-import com.example.module_square.bean.Rec
+import com.example.module_square.bean.Squarepic
 import com.example.module_square.databinding.ItemRvBinding
 
 /**
@@ -25,12 +26,12 @@ import com.example.module_square.databinding.ItemRvBinding
  * email 1206897770@qq.com
  * date 2025-2-18
  */
-class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil.ItemCallback<Rec>(){
-    override fun areItemsTheSame(oldItem: Rec, newItem: Rec): Boolean {
+class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :DiffUtil.ItemCallback<Squarepic>(){
+    override fun areItemsTheSame(oldItem: Squarepic, newItem: Squarepic): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Rec, newItem: Rec): Boolean {
+    override fun areContentsTheSame(oldItem: Squarepic, newItem: Squarepic): Boolean {
         return oldItem.title == newItem.title
     }
 
@@ -72,12 +73,30 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
         }
     //inner class BannerViewHolder(bannerBinding: ItemBannerBinding):RecyclerView.ViewHolder(bannerBinding.root)
     inner class rvHolder(binding: ItemRvBinding):RecyclerView.ViewHolder(binding.root){
-        private val cover = binding.ivPhoto
+        internal val cover = binding.ivPhoto
         private val title=binding.tvName
         private val author=binding.ivAuthor
 
         private var currentUrl : String? = null
+        private var currentData: Squarepic? = null
+
+        private var columnWidth: Int = 0
+
         init {
+
+            cover.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    // 移除监听，避免重复调用
+                    cover.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    // 列宽 = ImageView宽度（因cover是match_parent，宽度等于列宽）
+                    columnWidth = cover.width
+                    // 若首次布局时已有数据，重新绑定一次（确保高度正确）
+                    currentData?.let { bind(it) }
+                }
+            })
+
+
+
             itemView.setOnClickListener {
                 val position =bindingAdapterPosition
                 if (position!=RecyclerView.NO_POSITION){
@@ -108,23 +127,34 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
             }
         }
 
-        fun bind(data:Rec){
-            currentUrl=data.coverUrl
+        fun bind(data:Squarepic){
+            currentData = data
+            //currentUrl=data.coverUrl
             // 清空旧图片
-            cover.setImageDrawable(null)
+            //cover.setImageDrawable(null)
             // 重置高度
-            cover.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            //cover.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
 
-            cover.post {
+            //cover.post {
                 // 校验：避免View复用后，旧的post回调影响新数据
-                if (currentUrl != data.coverUrl) return@post
+                //if (currentUrl != data.coverUrl) return@post
 
-                val columnWidth = cover.width // 列宽（match_parent后等于ImageView宽度）
-                if (columnWidth <= 0) return@post // 宽度未测量完成，跳过
+                //val columnWidth = cover.width // 列宽（match_parent后等于ImageView宽度）
+                if (columnWidth <= 0) return//@post // 宽度未测量完成，跳过
+
+                val targetHeight = if (data.picWidth > 0 && data.picHight > 0) {
+                    (data.picHight.toFloat() / data.picWidth * columnWidth).toInt()
+                } else {
+                    // 无宽高信息时，用默认比例（如1:1）避免高度为0
+                    columnWidth // 默认正方形
+                }
+                cover.layoutParams.height = targetHeight
 
             Glide.with(itemView.context)
                 .asBitmap()
-                .load(data.coverUrl).apply(RequestOptions().fitCenter())
+                .load(data.coverUrl)
+                .centerCrop()
+                /*.apply(RequestOptions().fitCenter())
                 .listener(object :RequestListener<Bitmap>{
                     override fun onLoadFailed(
                         e: GlideException?,
@@ -154,7 +184,7 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                         cover.setImageBitmap(resource) // 显示图片
                         return true
                     }
-                })
+                })*/
                 .into(cover)
             Glide.with(itemView.context)
                 .load(data.icon).circleCrop()
@@ -166,10 +196,16 @@ class reAdpter : PagingDataAdapter<Rec,RecyclerView.ViewHolder>(object :DiffUtil
                 title.text=data.author
             }
 
-        }
+       // }
 
     }
 }
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is rvHolder) {
+            holder.cover.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+    }
 }
 
 

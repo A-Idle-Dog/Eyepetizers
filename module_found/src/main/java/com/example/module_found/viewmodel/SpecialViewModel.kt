@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 /**
  *description:能看小说的app
@@ -27,6 +28,8 @@ class SpecialViewModel:ViewModel() {
     private var _SpecialDetialStateFlow = MutableStateFlow<SpecialDetailBean?>(null)
     val specialDetialStateFlow: StateFlow<SpecialDetailBean?>
         get() = _SpecialDetialStateFlow.asStateFlow()
+    private val _isConnected = MutableStateFlow<Boolean?>(null)
+    val isConnected: StateFlow<Boolean?> = _isConnected
 
     fun getSpecial(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,8 +44,14 @@ class SpecialViewModel:ViewModel() {
                     response1.add(responseItem)
                 }
                 _SpecialStateFlow.emit(response1)
+                _isConnected.emit(true)
             }catch (e:Exception){
                 e.printStackTrace()
+                if (e is IOException) { // 断网等网络错误
+                    _isConnected.emit(false)
+                } else {
+                    _isConnected.emit(null)
+                }
             }
 
         }
@@ -54,8 +63,14 @@ class SpecialViewModel:ViewModel() {
                 val responseItem = Category.special.getSpecialDetail(id)
 
                 _SpecialDetialStateFlow.emit(responseItem)
+                _isConnected.emit(true)
             } catch (e: Exception) {
                 e.printStackTrace()
+                if (e is IOException) { // 断网等网络错误
+                    _isConnected.emit(false)
+                } else {
+                    _isConnected.emit(null)
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.module_square.bean
 
+import java.io.Serializable
+
 /**
  *description:能看小说的app
  * author 王以飞
@@ -9,46 +11,46 @@ package com.example.module_square.bean
 data class SquareBean(
     val adExist: Boolean,
     val count: Int,
-    val itemList: List<RecItem>,//1
+    val itemList: List<SquareItem>,//1
     val nextPageUrl: String,
     val total: Int
-)
+): Serializable
 
-data class RecItem(
+data class SquareItem(
     val adIndex: Int,
-    val `data`: RecData,//2
+    val `data`: SquareData,//2
     val id: Int,
     val tag: Any,
     val trackingData: Any,
     val type: String
-)
+): Serializable
 
-data class RecData(
+data class SquareData(
     val adTrack: Any,
-    val content: RecContent,//3
+    val content: SquareContent,//3
     val count: Int,
     val dataType: String,
     val footer: Any,
-)
+): Serializable
 
-data class RecContent(
+data class SquareContent(
     val adIndex: Int,
-    val `data`: RecDataX,
+    val `data`: SquareDataX,
     val id: Int,
     val tag: Any,
     val trackingData: Any,
     val type: String
-)
+): Serializable
 
 
-data class RecDataX(
+data class SquareDataX(
     val addWatermark: Boolean,
     val area: String,
     val checkStatus: String,
     val city: String,
     val collected: Boolean,
-    val consumption: RecConsumption,
-    val cover: RecCover,
+    val consumption: SquareConsumption,
+    val cover: SquareCover,
     val createTime: Long,
     val dataType: String,
     val description: String,
@@ -59,17 +61,17 @@ data class RecDataX(
     val latitude: Double,
     val library: String,
     val longitude: Double,
-    val owner: RecOwner,
+    val owner: SquareOwner,
     val playUrl: String,
     val playUrlWatermark: String,
     val privateMessageActionUrl: Any,
     val reallyCollected: Boolean,
-    val recentOnceReply: RecRecentOnceReply,
+    val recentOnceReply: SquareRecentOnceReply,
     val releaseTime: Long,
     val resourceType: String,
     val selectedTime: Any,
     val source: String,
-    val tags: List<RecTag>,
+    val tags: List<SquareTag>,
     val title: String,
     val transId: Any,
     val type: String,
@@ -82,24 +84,24 @@ data class RecDataX(
     val validateStatus: String,
     val validateTaskId: String,
     val width: Int
-)
+): Serializable
 
-data class RecConsumption(
+data class SquareConsumption(
     val collectionCount: Int,
     val realCollectionCount: Int,
     val replyCount: Int,
     val shareCount: Int
-)
+): Serializable
 
-data class RecCover(
+data class SquareCover(
     val blurred: Any,
     val detail: String,
     val feed: String,
     val homepage: Any,
     val sharing: Any
-)
+): Serializable
 
-data class RecOwner(
+data class SquareOwner(
     val actionUrl: String,
     val area: Any,
     val avatar: String,
@@ -121,17 +123,17 @@ data class RecOwner(
     val uid: Int,
     val university: String,
     val userType: String
-)
+): Serializable
 
-data class RecRecentOnceReply(
+data class SquareRecentOnceReply(
     val actionUrl: String,
     val contentType: Any,
     val dataType: String,
     val message: String,
     val nickname: String
-)
+): Serializable
 
-data class RecTag(
+data class SquareTag(
     val actionUrl: String,
     val adTrack: Any,
     val bgPicture: String,
@@ -146,8 +148,8 @@ data class RecTag(
     val name: String,
     val newestEndTime: Long,
     val tagRecType: String
-)
-data class Rec(
+): Serializable
+data class Squarepic(
     val coverUrl:String,
     val title:String,
     val icon:String,
@@ -158,8 +160,10 @@ data class Rec(
     val clloect:Int,
     val realCollect :Int,
     val liked:Boolean,
-    val tags: List<RecTag>,
+    val tags: List<SquareTag>,
     val uid: Int,
     val ip:String,
-    val time: Long
-)
+    val time: Long,
+    val picHight :Int,
+    val picWidth :Int
+): Serializable

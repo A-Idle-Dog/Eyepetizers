@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        /*
+
         val list  = listOf(
             HomeFragment(),
             SquareFragment(),
@@ -62,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-         */
+
     }
     fun startFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
