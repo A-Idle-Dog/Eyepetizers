@@ -17,7 +17,7 @@ abstract class BaseActivity<viewBinding:ViewBinding> : AppCompatActivity() {
     abstract fun getBinding() : viewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        //setContentView(R.layout.activity_base)
         setContentView(mBinding.root)
 
     }

@@ -122,7 +122,7 @@ class SquareFragment : BaseFragment<FragmentSquareBinding>() {
                         refresh is LoadState.Loading->{ mBinding?.pbLoad?.visibility = View.VISIBLE}
                         refresh is LoadState.NotLoading->{
                             mBinding?.pbLoad?.visibility  =View.GONE}
-                        refresh is LoadState.Error ->{mBinding?.pbLoad?.visibility = View.GONE
+                        refresh is LoadState.Error ->{mBinding?.pbLoad?.visibility = View.VISIBLE
                             val error = refresh.error
                             val errorMsg = if (error is IOException) {
                                 "网络连接失败，请检查网络" // 断网、连接超时等网络错误

@@ -1,5 +1,6 @@
 package com.example.module_square.adpter
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,16 +38,7 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
 
 
 }) {
-    /*private var mInitBanner: ((reAdpter) -> Unit)? = null
-    override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> 0
-            else -> 1
-        }
-    }
-    fun onInitBanner(ir: (reAdpter) -> Unit) {
-        mInitBanner = ir
-    }*/
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position) ?: return
@@ -60,18 +52,11 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
-       /* when(viewType){
-            0->{
-                val binding=ItemBannerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-                val vp=binding.bannerViewPager
-                mInitBanner?.invoke(this@reAdpter)
-                return BannerViewHolder(binding)
-            }else->{*/
+
                 val binding=ItemRvBinding.inflate(LayoutInflater.from(parent.context),parent,false)
             return rvHolder(binding)
-            //}
+
         }
-    //inner class BannerViewHolder(bannerBinding: ItemBannerBinding):RecyclerView.ViewHolder(bannerBinding.root)
     inner class rvHolder(binding: ItemRvBinding):RecyclerView.ViewHolder(binding.root){
         internal val cover = binding.ivPhoto
         private val title=binding.tvName
@@ -88,9 +73,9 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
                 override fun onGlobalLayout() {
                     // 移除监听，避免重复调用
                     cover.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    // 列宽 = ImageView宽度（因cover是match_parent，宽度等于列宽）
+                    // 列宽 = ImageView宽度
                     columnWidth = cover.width
-                    // 若首次布局时已有数据，重新绑定一次（确保高度正确）
+                    // 若首次布局时已有数据，重新绑定一次
                     currentData?.let { bind(it) }
                 }
             })
@@ -127,25 +112,16 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
             }
         }
 
+        @SuppressLint("SuspiciousIndentation")
         fun bind(data:Squarepic){
             currentData = data
-            //currentUrl=data.coverUrl
-            // 清空旧图片
-            //cover.setImageDrawable(null)
-            // 重置高度
-            //cover.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
 
-            //cover.post {
-                // 校验：避免View复用后，旧的post回调影响新数据
-                //if (currentUrl != data.coverUrl) return@post
-
-                //val columnWidth = cover.width // 列宽（match_parent后等于ImageView宽度）
-                if (columnWidth <= 0) return//@post // 宽度未测量完成，跳过
+                if (columnWidth <= 0) return // 宽度未测量完成，跳过
 
                 val targetHeight = if (data.picWidth > 0 && data.picHight > 0) {
                     (data.picHight.toFloat() / data.picWidth * columnWidth).toInt()
                 } else {
-                    // 无宽高信息时，用默认比例（如1:1）避免高度为0
+
                     columnWidth // 默认正方形
                 }
                 cover.layoutParams.height = targetHeight
@@ -154,37 +130,7 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
                 .asBitmap()
                 .load(data.coverUrl)
                 .centerCrop()
-                /*.apply(RequestOptions().fitCenter())
-                .listener(object :RequestListener<Bitmap>{
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        cover.layoutParams.height = columnWidth
-                        cover.setImageResource(R.drawable.loading2) // 错误占位图
-                        Log.e("ImageLoad", "图片加载失败: ${e?.message}")
-                        return false
 
-                    }
-
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        if (currentUrl != data.coverUrl) return false
-
-                        // 计算高度：高度 = (图片高度 / 图片宽度) * 列宽（保持比例）
-                        val targetHeight = ((resource?.height?.toFloat()  )!! / resource.width * columnWidth).toInt()
-                        cover.layoutParams.height = targetHeight // 设置动态高度
-                        cover.setImageBitmap(resource) // 显示图片
-                        return true
-                    }
-                })*/
                 .into(cover)
             Glide.with(itemView.context)
                 .load(data.icon).circleCrop()
@@ -196,7 +142,7 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
                 title.text=data.author
             }
 
-       // }
+
 
     }
 }
