@@ -16,7 +16,7 @@ import android.net.Network
  */
 class NetControl(context: Context) {
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?:throw IllegalStateException("不可取啊")
-    private val _isConnected = MutableStateFlow(false)
+    private val _isConnected = MutableStateFlow(true)
     val isConnected :StateFlow<Boolean> = _isConnected
     init {
 
