@@ -67,6 +67,8 @@ class homeLogFragment : Fragment() {
                     .withBoolean("isLike",it.data.content.data.collected)
                     .withBoolean("isCollect",it.data.content.data.reallyCollected)
                     .withString("shareUrl",it.data.content.data.webUrl.raw)
+                    .withInt("source",0)
+                    .withInt("currentPosition",0)
                     .navigation()
             }
         }

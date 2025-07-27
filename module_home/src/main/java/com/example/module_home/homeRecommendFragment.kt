@@ -65,6 +65,7 @@ class homeRecommendFragment : Fragment() {
                     .withBoolean("isLike",it.data.played)
                     .withBoolean("isCollect",it.data.collected)
                     .withString("shareUrl",it.data.webUrl.raw)
+                    .withInt("source",0)
                     .navigation()
             }
             recommendadapter.onFollewItemClick = {
@@ -83,6 +84,8 @@ class homeRecommendFragment : Fragment() {
                     .withBoolean("isLike",it.data.content.data.played)
                     .withBoolean("isCollect",it.data.content.data.collected)
                     .withString("shareUrl",it.data.content.data.webUrl.raw)
+                    .withInt("source",0)
+                    .withInt("currentPosition",0)
                     .navigation()
             }
         }

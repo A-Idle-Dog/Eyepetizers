@@ -17,5 +17,7 @@ data class invokeitem(
     val collectcount: Int,
     var isLike: Boolean,
     var isCollect: Boolean,
-    val shareUrl: String
+    val shareUrl: String,
+    var source :Int,
+    var currentPosition: Int
 ) : Parcelable

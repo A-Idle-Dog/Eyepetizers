@@ -38,6 +38,7 @@ class videoFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var exoPlayer: SimpleExoPlayer
     private var invokeitem: invokeitem? = null
+    private var tabLayoutMediator: TabLayoutMediator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,17 +78,22 @@ class videoFragment : Fragment() {
 
     fun initvt(){
         binding.tabcontent.adapter = tabAdapter(requireActivity(), invokeitem!!)
-        TabLayoutMediator(binding.tabLayout, binding.tabcontent) { tab, position ->
+         val tabLayoutMediator =TabLayoutMediator(binding.tabLayout, binding.tabcontent) { tab, position ->
             tab.text = when(position) {
                 0 -> "简介"
                 else -> "评论"
 
             }
-        }.attach()
+        }
+        tabLayoutMediator.attach()
     }
 
     fun initplayer(item: invokeitem){
-        exoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
+        exoPlayer = SimpleExoPlayer.Builder(requireContext()).build().apply {
+            lifecycleScope.launchWhenResumed {
+                playWhenReady = true
+            }
+        }
         binding.playerview.player = exoPlayer
 
         val mediaItem = MediaItem.Builder()
@@ -297,18 +303,23 @@ class videoFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding?.run {
-            likeIcon.animate()?.cancel()
-            collectIcon.animate()?.cancel()
-            shareIcon.animate()?.cancel()
+        exoPlayer.stop()
+        exoPlayer.release()
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
+        _binding?.let {
+            it.likeIcon.setOnClickListener(null)
+            it.collectIcon.setOnClickListener(null)
+            it.shareIcon.setOnClickListener(null)
         }
+        _binding = null
     }
 
     fun insertOrDeleteLikeItem(item: invokeitem){
         lifecycleScope.launch(Dispatchers.IO) {
             if (item.isLike){
                 Log.d("ROOMDATA", "已添加${item.id}")
-                database.favoriteVideoDao().insert(FavoriteVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl))
+                database.favoriteVideoDao().insert(FavoriteVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl,item.source,0))
             }else{
                 Log.d("ROOMDATA", "已删除${item.id}")
                 val existing = database.favoriteVideoDao().getFavoriteByVideoId(item.id)
@@ -323,7 +334,7 @@ class videoFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (item.isCollect){
                 Log.d("ROOMDATA", "已添加${item.id}")
-                database.collectVideoDao().insert(CollectVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl))
+                database.collectVideoDao().insert(CollectVideo(item.playuri, item.cover, item.id, item.title, item.author, item.authoricon, item.tags, item.des, item.likecount, item.collectcount, item.isLike, item.isCollect, item.shareUrl,item.source,0))
             }else{
                 Log.d("ROOMDATA", "已删除${item.id}")
                 val existing = database.collectVideoDao().getFavoriteByVideoId(item.id)

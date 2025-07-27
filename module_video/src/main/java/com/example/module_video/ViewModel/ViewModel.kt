@@ -33,7 +33,6 @@ class relatedViewModel : ViewModel() {
                 }
                 val mappedList = validItem.mapNotNull { item ->
                     item.data?.let { data ->
-                        // 修复点1：安全处理tags字段
                         val tagName = data.tags?.firstOrNull()?.name ?: ""
 
                         invokeitem(
@@ -43,14 +42,15 @@ class relatedViewModel : ViewModel() {
                             title = data.title,
                             author = data.author?.name ?: "未知作者",
                             authoricon = data.author?.icon ?: "",
-                            // 修复点2：使用安全获取的tagName
                             tags = tagName,
                             des = data.description,
                             likecount = data.consumption?.realCollectionCount ?: 0,
                             collectcount = data.consumption?.collectionCount ?: 0,
                             isLike = data.collected,
                             isCollect = data.reallyCollected,
-                            shareUrl = data.webUrl.raw
+                            shareUrl = data.webUrl.raw,
+                            source = 0,
+                            currentPosition = 0
                         )
                     }
                 }
@@ -58,7 +58,6 @@ class relatedViewModel : ViewModel() {
                 val maxList = listOf(firstItem) + mappedList
                 _relatedList.value = maxList
             } catch (e: Exception) {
-                // 修复点3：添加更有意义的错误日志
                 Log.e("relatedViewModel", "获取相关数据失败: ${e.message}", e)
             }
         }

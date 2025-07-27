@@ -24,4 +24,5 @@ interface FavoriteVideoDao {
 
     @Query("SELECT * FROM favorite_videos WHERE videoId = :videoId")
     suspend fun getFavoriteByVideoId(videoId: Int): FavoriteVideo?
+
 }

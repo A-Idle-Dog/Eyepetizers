@@ -56,6 +56,8 @@ class RvCateDetailAdpter:PagingDataAdapter<Item,RvCateDetailAdpter.rvCateDetailH
                             .withBoolean("isLike", cate.data.content.data.collected)
                             .withBoolean("isCollect", cate.data.content.data.reallyCollected)
                             .withString("shareUrl", cate.data.content.data.webUrl?.raw)
+                            .withInt("source",0)
+                            .withInt("currentPosition",0)
                             .navigation()
                     }
                 }
