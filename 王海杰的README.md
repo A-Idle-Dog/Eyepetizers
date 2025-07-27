@@ -1,22 +1,26 @@
   这个视频软件是我和王以飞仿照开眼App写的一个软件，我主要负责的模块是module_home，module_Video和module_photo以及module_my,下面就是针对我负责的这几个模块的一些演示和所使用技术的展示
-  1.module_home
+  ## 1.module_home
   ![fa259bfd72e0d1687854e84771dda4e9](https://github.com/user-attachments/assets/8dba7bf7-d675-464e-81a1-847f5bd55982)
+  
     这个模块其实没什么好说的，就是通过tabLayout联动ViewPager2和两个fragment后，通过协程＋Paging3将推荐和日报的api数据分页加载到两个fragment的RecyclerView里面
-  2.module_photo：
+  ## 2.module_photo：
   ![738d4db131334330fde160ecc65037e4](https://github.com/user-attachments/assets/522c5b15-8465-4d14-9d36-f0ea658e4ba6)
+
     这个模块就更没什么好说的了，点击图片后传参，然后通过一个ViewPager2左右滑动来展示图片
-  3.module_Video
-    ![65c8f03513b2a546113542304fe1c937](https://github.com/user-attachments/assets/9a27bc9e-bb20-40d9-bbe0-714d794942f4)
+  ## 3.module_Video
+  ![65c8f03513b2a546113542304fe1c937](https://github.com/user-attachments/assets/9a27bc9e-bb20-40d9-bbe0-714d794942f4)
+    
     module_Video我觉得我是这次项目算写得比较好，也是比较有创意的一个模块，在这个模块，我没有仿照开眼的通过点击视频id然后将获取的推荐视频单独展示，而是将点击视频的数据和新加载的视频数据合并成一个列表，再将这个列表通过Livedata暴露给外面的ViewPager2，
     实现了类似抖音的上下滑动加载不同视频，在单个ViewPager2的item中，我同样也使用了tabLayout联动另一个ViewPager2和两个fragment分别用来展示视频介绍和通过网络请求得来的视频评论数据。
-  4.module_my
+  ## 4.module_my
   ![c35e7b54266d7af962650972164e8ea9](https://github.com/user-attachments/assets/306cd80f-d04f-418e-bfba-46860fe33c80)
+  
     这个模块是最后几天突发灵感，突然想做的一个模块，所以这个模块的时间就很紧张，在一些功能上有所阉割，为了实现这个模块的设计，我搭建了一个简单的room数据库，数据库中的两个表分别用来储存点赞的视频数据和收藏的视频数据，当我们在module_Video中给一个视频点赞或收藏后
     数据就会传入这个Room数据库中，module_my的整体页面ui仿照的抖音的我的页面，页面中有两个通过Tablayout联动的两个fragemnt，分别从数据库中获取整个列表的信息，通过GridLayoutManager来展示列表，通过LiveData来观察整个列表，实现自动刷新。
-  不足之处：
+## 不足之处：
     对很多技术都是一知半解的，只知道如何去使用，却不理解其中真正的运行逻辑。很多代码也很冗余，对内存泄漏的处理的意识也不够好，对如何处理内存泄漏的能力也十分有限，包括到写这篇README的时候，module_Video的上下滑动加载不同视频的逻辑中都还存在内存泄漏，究其根本还是自己
     对于生命周期理解不够以及相关能力的欠缺。 
-  个人总结与展望：
+## 个人总结与展望：
     时间过得很快，不知不觉间我已经跟随红岩网校学习有一年之久了，这一年以来，我从一个0编程基础的小白，一步步蜕变成能让自己写出的app在指尖跳跃。这一路走来自然经历过不少对知识的不解，对运行报错的苦恼，但也不乏问题终于解决时的欣慰，这些都成为了我成长路上的养料，无论我以后从事
     什么样的工作，这些经历将是我无论过了多少年都不会被磨灭的宝贵财富。在这一个月的考核中，我也学习了之前从来没有接触过的东西，比如RV缓存机制的源码等等，这使我收获颇丰。当然这一个月下来，我也认识到了自己和别人的差距，我对我自己的目标和规划都有了更明确的认识，我相信我自己能在明确了自己的目标和规划后
     更加努力的学习，努力提升自我
