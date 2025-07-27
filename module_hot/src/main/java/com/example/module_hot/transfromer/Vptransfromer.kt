@@ -17,7 +17,7 @@ class Vptransfromer : ViewPager2.PageTransformer {
             val pageheight=height
             val rotation = position * -30f
             pivotX = if (position < 0) pagewidth.toFloat() else 0f
-            pivotY = height.toFloat() / 2f
+            pivotY = pageheight.toFloat() / 2f
 
             rotationY = rotation
             alpha = if (position < -1 || position > 1) 0f else 1f

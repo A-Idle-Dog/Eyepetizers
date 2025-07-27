@@ -56,7 +56,7 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*type = savedInstanceState?.getString("type") ?: arguments?.getString("type") ?: return*/
+        //type = savedInstanceState?.getString("type") ?: arguments?.getString("type") ?: return
         Log.d("MonthFragment", "onViewCreated: 视图创建成功")
 
 
@@ -98,7 +98,7 @@ class MonthFragment() : BaseFragment<FragmentMonthBinding>() {
                 // 观察当前 type 对应的网络状态
                 netControl.isConnected.collect { isConnected ->
                     when (isConnected) {
-                        false -> { // 网络错误（断网等）
+                        false -> { // 网络错误
                             if (!NetWork.hasShownNetworkError()) {
                                 Toast.makeText(
                                     requireContext(),
