@@ -50,6 +50,8 @@ class RvSpDetailAdpter(private val special: SpecialDetailBean):RecyclerView.Adap
                         .withBoolean("isLike", data.data.content.data.collected!!)
                         .withBoolean("isCollect", data.data.content.data.reallyCollected!!)
                         .withString("shareUrl", data.data.content.data.webUrl?.raw)
+                        .withInt("source",0)
+                        .withInt("currentPosition",0)
                         .navigation()
 
                 }

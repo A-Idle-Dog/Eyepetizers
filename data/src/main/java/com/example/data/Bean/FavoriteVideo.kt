@@ -19,5 +19,7 @@ data class FavoriteVideo(
     var isLike: Boolean,
     var isCollect: Boolean,
     val shareUrl: String,
+    val source: Int,
+    val currentPosition: Int,
     @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis()
 )

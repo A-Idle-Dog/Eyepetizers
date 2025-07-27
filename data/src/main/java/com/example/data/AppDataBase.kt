@@ -11,7 +11,7 @@ import com.example.data.Dao.FavoriteVideoDao
 
 @Database(
     entities = [FavoriteVideo::class,CollectVideo::class],
-    version = 2,
+    version = 4,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

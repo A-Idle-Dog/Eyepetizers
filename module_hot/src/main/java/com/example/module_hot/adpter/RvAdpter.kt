@@ -55,6 +55,8 @@ class RvAdpter: ListAdapter<VideoItem,RecyclerView.ViewHolder>(VideoDiffCallback
                         .withBoolean("isLike", data.data.collected!!)
                         .withBoolean("isCollect", data.data.reallyCollected!!)
                         .withString("shareUrl", data.data.webUrl?.raw)
+                        .withInt("source",0)
+                        .withInt("currentPosition",0)
                         .navigation()
                 }
             }

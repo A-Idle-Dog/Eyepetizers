@@ -5,9 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".CollectFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/crecyclerView"
+    <ViewSwitcher
+        android:id="@+id/sw"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
+
+        <ImageView
+            android:src="@drawable/blankcollect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/crecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </ViewSwitcher>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

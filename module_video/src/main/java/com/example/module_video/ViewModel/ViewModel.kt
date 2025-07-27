@@ -48,7 +48,9 @@ class relatedViewModel : ViewModel() {
                             collectcount = data.consumption?.collectionCount ?: 0,
                             isLike = data.collected,
                             isCollect = data.reallyCollected,
-                            shareUrl = data.webUrl.raw
+                            shareUrl = data.webUrl.raw,
+                            source = 0,
+                            currentPosition = 0
                         )
                     }
                 }

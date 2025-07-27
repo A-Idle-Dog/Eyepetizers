@@ -15,14 +15,14 @@ import com.example.module_my.R
 
 class FavoriteAdapter:ListAdapter<FavoriteVideo,FavoriteAdapter.FavoriteViewHolder>(FavoriteVideoDiffCallback) {
 
-    var onItemClick :((FavoriteVideo) -> Unit)? = null
+    var onItemClick :((FavoriteVideo,Int) -> Unit)? = null
 
     inner class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivItem = itemView.findViewById<ImageView>(R.id.iv_item)
         val tvlike = itemView.findViewById<TextView>(R.id.tv_like_count)
         init {
             itemView.setOnClickListener {
-                onItemClick?.invoke(getItem(adapterPosition)!!)
+                onItemClick?.invoke(getItem(adapterPosition)!!,adapterPosition)
             }
         }
     }

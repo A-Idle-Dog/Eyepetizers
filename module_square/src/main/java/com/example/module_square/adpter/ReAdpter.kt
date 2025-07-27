@@ -122,6 +122,7 @@ class reAdpter : PagingDataAdapter<Squarepic,RecyclerView.ViewHolder>(object :Di
                         .withInt("uid" ,data.uid)
                         .withString("ip",data.ip)
                         .withLong("time",data.time)
+                        .withInt("currentPosition",0)
                         .navigation()
                 }
             }

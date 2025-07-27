@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.data.AppDatabase
+import com.example.data.Bean.FavoriteVideo
 import com.example.module_my.Adapter.FavoriteAdapter
 import com.example.module_my.ViewModel.FavoritesViewModel
 import com.example.module_my.ViewModel.FavoritesViewModelFactory
@@ -20,6 +21,7 @@ class LikeFragment : Fragment() {
     private lateinit var database: AppDatabase
     private lateinit var viewModel: FavoritesViewModel
     private var madapter: FavoriteAdapter = FavoriteAdapter()
+    private var list:List<FavoriteVideo> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +43,18 @@ class LikeFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(FavoritesViewModel::class.java)
         initAdapter()
         viewModel.favoriteVideos.observe(viewLifecycleOwner){
+            list = it
             (binding.likerecyclerView.adapter as FavoriteAdapter).submitList(it)
+            switcher(list)
         }
+
     }
 
     fun initAdapter(){
         binding.likerecyclerView.apply {
             adapter = madapter
             layoutManager = GridLayoutManager(context,3)
-            madapter.onItemClick = {
+            madapter.onItemClick = {it,position ->
                 ARouter.getInstance()
                     .build("/module_video/VideoActivity")
                     .withString("playuri",it.palyurl)
@@ -65,14 +70,19 @@ class LikeFragment : Fragment() {
                     .withBoolean("isLike",it.isLike)
                     .withBoolean("isCollect",it.isCollect)
                     .withString("shareUrl",it.shareUrl)
+                    .withInt("source",1)
+                    .withInt("currentPosition",position)
                     .navigation()
             }
         }
     }
 
-    fun upData(){
-        viewModel.favoriteVideos.observe(viewLifecycleOwner){
-            (binding.likerecyclerView.adapter as FavoriteAdapter).submitList(it)
+
+    fun switcher(list: List<FavoriteVideo>){
+        if(list.size==0){
+            binding.seitcher.setDisplayedChild(0)
+        }else{
+            binding.seitcher.setDisplayedChild(1)
         }
     }
 

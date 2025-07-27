@@ -16,14 +16,14 @@ import com.example.module_my.R
 
 class CollectAdapter: ListAdapter<CollectVideo, CollectAdapter.CollectViewHolder>(CollectVideoDiffCallback) {
 
-    var onItemClick :((CollectVideo) -> Unit)? = null
+    var onItemClick :((CollectVideo,Int) -> Unit)? = null
 
     inner class CollectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivItem = itemView.findViewById<ImageView>(R.id.iv_item)
         val tvlike = itemView.findViewById<TextView>(R.id.tv_like_count)
         init {
             itemView.setOnClickListener {
-                onItemClick?.invoke(getItem(adapterPosition)!!)
+                onItemClick?.invoke(getItem(adapterPosition)!!,position)
             }
         }
     }

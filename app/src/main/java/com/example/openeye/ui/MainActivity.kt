@@ -67,21 +67,22 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.two -> {
                     supportFragmentManager.beginTransaction().apply {
-                        hide(homeFragment)
-                        hide(SquareFragment)
-                        hide(mineFragment)
-                        hide(hotFragment)
-                        show(foundFragment)
-                    }.commit()
-                }
-
-                R.id.three -> {
-                    supportFragmentManager.beginTransaction().apply {
                         hide(foundFragment)
                         hide(homeFragment)
                         hide(hotFragment)
                         hide(mineFragment)
                         show(SquareFragment)
+
+                    }.commit()
+                }
+
+                R.id.three -> {
+                    supportFragmentManager.beginTransaction().apply {
+                        hide(homeFragment)
+                        hide(SquareFragment)
+                        hide(mineFragment)
+                        hide(hotFragment)
+                        show(foundFragment)
                     }.commit()
                 }
 

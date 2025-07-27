@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.data.AppDatabase
+import com.example.data.Bean.CollectVideo
 import com.example.module_my.Adapter.CollectAdapter
 import com.example.module_my.ViewModel.CollectViewModel
 import com.example.module_my.ViewModel.CollectViewModelFactory
@@ -24,6 +25,7 @@ class CollectFragment : Fragment() {
     private val madapter : CollectAdapter = CollectAdapter()
     private lateinit var database : AppDatabase
     private lateinit var viewModel: CollectViewModel
+    private var list : List<CollectVideo> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +50,19 @@ class CollectFragment : Fragment() {
         val factory = CollectViewModelFactory(database.collectVideoDao())
         viewModel = ViewModelProvider(this, factory).get(CollectViewModel::class.java)
         initAdapter()
-        upData()
+        viewModel.collectVideo.observe(viewLifecycleOwner){
+            list = it
+            (binding.crecyclerView.adapter as CollectAdapter).submitList(it)
+            ViewSwitcher(list)
+        }
+
     }
 
     fun initAdapter(){
         binding.crecyclerView.apply {
             adapter = madapter
             layoutManager = GridLayoutManager(requireContext(),3)
-            madapter.onItemClick = {
+            madapter.onItemClick = {it,position->
                 ARouter.getInstance()
                     .build("/module_video/VideoActivity")
                     .withString("playuri",it.palyurl)
@@ -71,16 +78,21 @@ class CollectFragment : Fragment() {
                     .withBoolean("isLike",it.isLike)
                     .withBoolean("isCollect",it.isCollect)
                     .withString("shareUrl",it.shareUrl)
+                    .withInt("source",2)
+                    .withInt("currentPosition",position)
                     .navigation()
             }
         }
     }
 
-    fun upData(){
-        viewModel.collectVideo.observe(viewLifecycleOwner){
-            (binding.crecyclerView.adapter as CollectAdapter).submitList(it)
+    fun ViewSwitcher(list : List<CollectVideo>){
+        if(list.isNotEmpty()){
+            binding.sw.setDisplayedChild(1)
+        }else{
+            binding.sw.setDisplayedChild(0)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -5,11 +5,27 @@
     android:layout_height="match_parent"
     tools:context=".LikeFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/likerecyclerView"
+
+    <ViewSwitcher
+        android:id="@+id/seitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
+
+        <ImageView
+            android:src="@drawable/blanklike"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/likerecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+    </ViewSwitcher>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

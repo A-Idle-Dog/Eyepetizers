@@ -13,7 +13,7 @@ class profileFragment : Fragment() {
     private lateinit var invokeData : invokeitem
 
     private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!! // 安全获取绑定对象
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
