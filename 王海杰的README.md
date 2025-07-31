@@ -9,7 +9,8 @@
 
     这个模块就更没什么好说的了，点击图片后传参，然后通过一个ViewPager2左右滑动来展示图片  
   ## 3.module_Video
-  ![65c8f03513b2a546113542304fe1c937](https://github.com/user-attachments/assets/9a27bc9e-bb20-40d9-bbe0-714d794942f4)
+  ![65c8f03513b2a546113542304fe1c937](https://github.com/user-attachments/assets/7c3faca1-5792-4c15-a814-04634d10a5b8)
+
     
     module_Video我觉得我是这次项目算写得比较好，也是比较有创意的一个模块，在这个模块，
     我没有仿照开眼的通过点击视频id然后将获取的推荐视频单独展示，
@@ -17,7 +18,8 @@
     实现了类似抖音的上下滑动加载不同视频，在单个ViewPager2的item中，我同样也使用了tabLayout联动另一个
     ViewPager2和两个fragment分别用来展示视频介绍和通过网络请求得来的视频评论数据。
   ## 4.module_my
-  ![c35e7b54266d7af962650972164e8ea9](https://github.com/user-attachments/assets/306cd80f-d04f-418e-bfba-46860fe33c80)
+  ![c35e7b54266d7af962650972164e8ea9](https://github.com/user-attachments/assets/9617ae54-7e1a-4cc1-a00b-24355dca3971)
+
   
     这个模块是最后几天突发灵感，突然想做的一个模块，所以这个模块的时间就很紧张，在一些功能上有所阉割，
     为了实现这个模块的设计，我搭建了一个简单的room数据库，
@@ -39,3 +41,4 @@
     比如RV缓存机制的源码等等，
     这使我收获颇丰。当然这一个月下来，我也认识到了自己和别人的差距，我对我自己的目标和规划都有了更明确的认识，
     我相信我自己能在明确了自己的目标和规划后更加努力的学习，努力提升自我！
+    同时也很感谢这一年以来学长学姐们对我的一些帮助，这些都让我受益匪浅
